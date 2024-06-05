@@ -24,7 +24,7 @@ export const createTables = async () => {
         yeast_used VARCHAR,
         volume_in_gals FLOAT,
         date_finished VARCHAR,
-        finished BOOL
+        finished BOOL DEFAULT false
     );`);
 	await db.query(`CREATE TABLE note_types (
         type VARCHAR PRIMARY KEY
@@ -40,12 +40,11 @@ export const createTables = async () => {
         id SERIAL PRIMARY KEY,
         maker VARCHAR NOT NULL REFERENCES users(username),
         recipe_name VARCHAR NOT NULL,
-        date_added VARCHAR DEFAULT NOW() ,
+        date_added VARCHAR DEFAULT NOW(),
         link VARCHAR,
         body TEXT,
         image VARCHAR,
-        rating INT DEFAULT 0,
-        public BOOL DEFAULT FALSE
-
+        rating DECIMAL (2,1) DEFAULT 0,
+        public BOOL DEFAULT true
     );`);
 };

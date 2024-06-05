@@ -7,15 +7,16 @@ export interface Data {
 }
 
 export interface Brew {
+    id?: number,
 	maker: string,
 	brew_name: string,
 	date_started: string,
-	start_hydro_reading: number,
-	current_percentage: number,
-	yeast_used: string,
-	volume_in_gals: number,
-	date_finished: string,
-	finished: boolean
+	start_hydro_reading?: number,
+	current_percentage?: number,
+	yeast_used?: string,
+	volume_in_gals?: number,
+	date_finished?: string,
+	finished?: boolean
 }
 
 export interface NoteTypes {
@@ -23,22 +24,24 @@ export interface NoteTypes {
 }
 
 export interface Note {
+    id?: number
     maker: string,
     date_added: string,
     type: string,
     note_title: string,
-    body: any
+    body?: any
 }
 
 export interface Recipe {
+    id?: number,
     maker: string,
     recipe_name: string,
     date_added: string,
-    link: string,
-    body: string,
-    image: string,
-    rating: number,
-    hidden: boolean
+    link?: string,
+    body?: string,
+    image?: string,
+    rating?: number,
+    hidden?: boolean
 
 }
 

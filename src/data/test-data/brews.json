@@ -10,5 +10,17 @@
 		"volume_in_gals": 2,
 		"date_finished": "2024-06-02T21:03:28.822Z",
 		"finished": true
+	},
+	{
+		"maker": "juzz0604",
+		"brew_name": "Strawberry wine",
+		"date_started": "2024-03-05T21:03:28.822Z",
+		"start_hydro_reading": 1.122,
+		"current_percentage": 10,
+		"recipe_id": 2,
+		"yeast_used": "Lalvin k1113",
+		"volume_in_gals": 2,
+		"date_finished": "2024-06-02T21:03:28.822Z",
+		"finished": true
 	}
 ]
