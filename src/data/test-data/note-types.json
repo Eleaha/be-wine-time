@@ -1,0 +1,20 @@
+[
+	{
+		"type": "text"
+	},
+	{
+		"type": "hydro-reading"
+	},
+	{
+		"type": "yeast-added"
+	},
+	{
+		"type": "moved-to-secondary"
+	},
+	{
+		"type": "moved-to-clean-demijohn"
+	},
+	{
+		"type": "tasting-note"
+	}
+]

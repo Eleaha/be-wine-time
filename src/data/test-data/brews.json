@@ -1,0 +1,14 @@
+[
+	{
+		"maker": "juzz0604",
+		"brew_name": "maple mead",
+		"date_started": "2024-01-02T21:03:28.822Z",
+		"start_hydro_reading": 1.11,
+		"current_percentage": 12.4,
+		"recipe_id": 2,
+		"yeast_used": "Lalvin k1113",
+		"volume_in_gals": 2,
+		"date_finished": "2024-06-02T21:03:28.822Z",
+		"finished": true
+	}
+]
