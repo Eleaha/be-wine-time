@@ -14,6 +14,7 @@ export interface Brew {
 	start_hydro_reading?: number,
 	current_percentage?: number,
 	yeast_used?: string,
+    recipe_id?: number,
 	volume_in_gals?: number,
 	date_finished?: string,
 	finished?: boolean
@@ -24,8 +25,9 @@ export interface NoteTypes {
 }
 
 export interface Note {
-    id?: number
+    id?: number,
     maker: string,
+    wine_id: number,
     date_added: string,
     type: string,
     note_title: string,

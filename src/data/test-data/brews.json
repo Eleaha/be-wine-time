@@ -2,7 +2,7 @@
 	{
 		"maker": "juzz0604",
 		"brew_name": "maple mead",
-		"date_started": "2024-01-02T21:03:28.822Z",
+		"date_started": "2023-01-02T21:03:28.822Z",
 		"start_hydro_reading": 1.11,
 		"current_percentage": 12.4,
 		"recipe_id": 2,
@@ -16,11 +16,33 @@
 		"brew_name": "Strawberry wine",
 		"date_started": "2024-03-05T21:03:28.822Z",
 		"start_hydro_reading": 1.122,
-		"current_percentage": 10,
+		"current_percentage": 14.9,
 		"recipe_id": 2,
-		"yeast_used": "Lalvin k1113",
+		"yeast_used": "Lalvin e118",
 		"volume_in_gals": 2,
-		"date_finished": "2024-06-02T21:03:28.822Z",
+		"finished": true
+	},
+	{
+		"maker": "eleah2021",
+		"brew_name": "Cherry Wine",
+		"date_started": "2023-09-15T21:03:28.822Z",
+		"start_hydro_reading": 1.104,
+		"current_percentage": 13,
+		"recipe_id": 2,
+		"yeast_used": "Mangrove Jack C327",
+		"volume_in_gals": 2,
+		"finished": false
+	},
+	{
+		"maker": "eleah2021",
+		"brew_name": "Lemon Mint and Lavender",
+		"date_started": "2024-03-14T21:03:28.822Z",
+		"start_hydro_reading": 1.088,
+		"current_percentage": 6,
+		"recipe_id": 2,
+		"yeast_used": "Mangrove Jack C327",
+		"volume_in_gals": 2,
+		"date_finished": "2024-06-06T21:03:28.822Z",
 		"finished": true
 	}
 ]
