@@ -21,10 +21,11 @@ export const createTables = async () => {
         date_started VARCHAR NOT NULL,
         start_hydro_reading DECIMAL(4,3),
         current_percentage DECIMAL(3,1) DEFAULT 0,
+        recipe_id INT,
         yeast_used VARCHAR,
         volume_in_gals FLOAT,
         date_finished VARCHAR,
-        finished BOOL
+        finished BOOL DEFAULT false
     );`);
 	await db.query(`CREATE TABLE note_types (
         type VARCHAR PRIMARY KEY
@@ -32,6 +33,7 @@ export const createTables = async () => {
 	await db.query(`CREATE TABLE notes (
         id SERIAL PRIMARY KEY,
         maker VARCHAR NOT NULL REFERENCES users(username),
+        wine_id INT NOT NULL REFERENCES brews(id),
         type VARCHAR NOT NULL REFERENCES note_types(type),
         note_title VARCHAR NOT NULL,
         body TEXT
@@ -40,12 +42,11 @@ export const createTables = async () => {
         id SERIAL PRIMARY KEY,
         maker VARCHAR NOT NULL REFERENCES users(username),
         recipe_name VARCHAR NOT NULL,
-        date_added VARCHAR DEFAULT NOW() ,
+        date_added VARCHAR DEFAULT NOW(),
         link VARCHAR,
         body TEXT,
         image VARCHAR,
-        rating INT DEFAULT 0,
-        public BOOL DEFAULT FALSE
-
+        rating DECIMAL (2,1) DEFAULT 0,
+        hidden BOOL DEFAULT true
     );`);
 };

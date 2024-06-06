@@ -2,7 +2,7 @@
 	{
 		"maker": "juzz0604",
 		"recipe_name": "Maple Mead",
-		"date_added": "2024-06-02T16:03:28.822Z",
+		"date_added": "2023-06-02T16:03:28.822Z",
 		"link": "https://www.growforagecookferment.com/maple-mead/",
 		"body": "used 300g more honey",
 		"image": "www.test/image",
@@ -10,13 +10,28 @@
 		"hidden": true
 	},
 	{
-		"maker": "eeeeeleah2021",
+		"maker": "eleah2021",
 		"recipe_name": "elderflower wine",
 		"date_added": "2024-06-02T21:03:28.822Z",
-		"link": "https://www.growforagecookferment.com/maple-mead/",
-		"body": "used 300g more honey",
-		"image": "www.also-test/image",
-		"rating": 0,
-		"hidden": true
+		"body": "detailed recipe for making elderflower wine",
+		"image": "www.elderflower-wine/image",
+		"rating": 2.6,
+		"hidden": false
+	},
+	{
+		"maker": "eleah2021",
+		"recipe_name": "strawberry wine",
+		"date_added": "2023-06-02T21:03:28.822Z",
+		"link": "www.strawberry-wine.com",
+		"image": "www.strawberry-wine/image.com"
+	},
+	{
+		"maker": "eleah2021",
+		"recipe_name": "lemon, mint and lavender",
+		"date_added": "2023-11-26T21:03:28.822Z",
+		"body": "a really detailed recipe on how to make lemon, mint and lavender wine",
+		"image": "uploaded lemon mint and lavender pic",
+		"rating": 4.6,
+		"hidden": false
 	}
 ]

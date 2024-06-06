@@ -9,6 +9,9 @@
 		"type": "yeast-added"
 	},
 	{
+		"type": "ingredient-added"
+	},
+	{
 		"type": "moved-to-secondary"
 	},
 	{
@@ -16,5 +19,6 @@
 	},
 	{
 		"type": "tasting-note"
-	}
+	},
+	{ "type": "bottled" }
 ]
