@@ -16,6 +16,10 @@ app.use(express.json());
 app.use("/api", apiRouter);
 app.use("/api/brews", brewsRouter);
 
+app.all("*", (req: Request, res: Response, next: NextFunction) => {
+	res.status(404).send({ msg: "Not found" });
+});
+
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {
 	handleErrors(err, req, res, next);
 });

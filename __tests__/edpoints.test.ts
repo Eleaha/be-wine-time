@@ -12,6 +12,13 @@ beforeEach(() => {
 	return seed(data);
 });
 
+describe("general errors", () => {
+	test("GET /invalid/path - handles general 404 invalid path errors", async () => {
+		const { body } = await request(app).get("/garbage").expect(404);
+		expect(body.msg).toBe("Not found");
+	});
+});
+
 describe("/api", () => {
 	test("GET /api", async () => {
 		const { body } = await request(app).get("/api").expect(200);
