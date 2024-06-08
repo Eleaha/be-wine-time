@@ -3,7 +3,7 @@ import { app } from "../app";
 import { seed } from "../src/db/seed";
 import { data } from "../src/data/test-data/data-index";
 import { db } from "../src/db/db-connection";
-import { Brew } from "../src/interfaces";
+import { Brew, User } from "../src/interfaces";
 import endpoints from "../endpoints.json";
 
 afterAll(() => db.end());
@@ -13,16 +13,31 @@ beforeEach(() => {
 });
 
 describe("general errors", () => {
-	test("GET /invalid/path - handles general 404 invalid path errors", async () => {
+	test("GET 404 /invalid/path - handles general 404 invalid path errors", async () => {
 		const { body } = await request(app).get("/garbage").expect(404);
 		expect(body.msg).toBe("Not found");
 	});
 });
 
 describe("/api", () => {
-	test("GET /api", async () => {
+	test("GET 200 - /api", async () => {
 		const { body } = await request(app).get("/api").expect(200);
 		expect(body.endpoints).toEqual(endpoints);
+	});
+});
+
+describe("/api/users", () => {
+	test("GET 200 - /api/users - responds with an array of all users", async () => {
+		const { body } = await request(app).get("/api/users").expect(200);
+		const { users } = body;
+		expect(users).toHaveLength(3);
+		users.map((user: User) => {
+			expect(user).toMatchObject({
+				username: expect.any(String),
+				password: expect.any(String),
+				email: expect.any(String),
+			});
+		});
 	});
 });
 
