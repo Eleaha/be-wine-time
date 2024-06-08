@@ -20,7 +20,7 @@
 		"recipe_id": 2,
 		"yeast_used": "Lalvin e118",
 		"volume_in_gals": 2,
-		"finished": true
+		"finished": false
 	},
 	{
 		"maker": "eleah2021",
