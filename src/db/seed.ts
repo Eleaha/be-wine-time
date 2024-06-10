@@ -17,7 +17,7 @@ export const seed = async ({
 		`INSERT INTO users (username, password, email)
     VALUES
     %L;`,
-		userData.map(({ username, email, password }) => [username, email, password])
+		userData.map(({ username, password, email }) => [username, password, email])
 	);
 	await db.query(insertUserData);
 

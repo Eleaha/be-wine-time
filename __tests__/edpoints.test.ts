@@ -20,14 +20,14 @@ describe("general errors", () => {
 });
 
 describe("/api", () => {
-	test("GET 200 - /api", async () => {
+	test("GET 200 /api - responds with a json containing all that available endpoints", async () => {
 		const { body } = await request(app).get("/api").expect(200);
 		expect(body.endpoints).toEqual(endpoints);
 	});
 });
 
 describe("/api/users", () => {
-	test("GET 200 - /api/users - responds with an array of all users", async () => {
+	test("GET 200 /api/users - responds with an array of all users", async () => {
 		const { body } = await request(app).get("/api/users").expect(200);
 		const { users } = body;
 		expect(users).toHaveLength(3);
@@ -38,6 +38,32 @@ describe("/api/users", () => {
 				email: expect.any(String),
 			});
 		});
+	});
+});
+
+describe("/api/users/:user_id", () => {
+	describe("GET /api/users/:username", () => {
+		test("GET 200 /api/users/:username - responds with an object containing user information plus number of completed and in progress brews", async () => {
+			const { body } = await request(app)
+				.get("/api/users/eleah2021")
+				.expect(200);
+			const { user } = body;
+			expect(user).toEqual({
+				username: "eleah2021",
+				password: "AlsoTobyCat123!",
+				email: "ellie4tobycat@hotmail.co.uk",
+				brews_in_progress: 2,
+				completed_brews: 1,
+			});
+		});
+	});
+	test("GET 404 /api/users/:username - responds with a 404 error for a non existent username", async () => {
+		const { body } = await request(app).get("/api/users/garbage").expect(404);
+		expect(body.msg).toBe("Not found");
+	});
+	test("GET 404 /api/users/:username - responds with a 404 error for a non existent username", async () => {
+		const { body } = await request(app).get("/api/users/garbage").expect(404);
+		expect(body.msg).toBe("Not found");
 	});
 });
 
