@@ -57,6 +57,14 @@ describe("/api/users/:user_id", () => {
 			});
 		});
 	});
+	test("GET 404 /api/users/:username - responds with a 404 error for a non existent username", async () => {
+		const { body } = await request(app).get("/api/users/garbage").expect(404);
+		expect(body.msg).toBe("Not found");
+	});
+	test("GET 404 /api/users/:username - responds with a 404 error for a non existent username", async () => {
+		const { body } = await request(app).get("/api/users/garbage").expect(404);
+		expect(body.msg).toBe("Not found");
+	});
 });
 
 describe("/api/brews", () => {

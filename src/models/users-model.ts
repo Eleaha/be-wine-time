@@ -5,8 +5,6 @@ export const fetchUsers = async () => {
 	return rows;
 };
 
-//select columns
-
 export const fetchUserById = async (username: string) => {
 	const { rows } = await db.query(
 		`
@@ -22,6 +20,10 @@ export const fetchUserById = async (username: string) => {
 	`,
 		[username]
 	);
-	console.log(rows);
+
+	if (!rows.length) {
+		return Promise.reject({ status: 404, msg: "Not found" });
+	}
+
 	return rows[0];
 };
