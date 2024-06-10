@@ -48,6 +48,8 @@
 	{
 		"maker": "eleah2021",
 		"brew_name": "Lavender",
-		"date_started": "2024-06-10T21:03:28.822Z"
+		"date_started": "2024-06-10T21:03:28.822Z",
+		"current_percentage": 0,
+		"finished": false
 	}
 ]
