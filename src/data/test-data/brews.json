@@ -1,6 +1,6 @@
 [
 	{
-		"maker": "juzz0604",
+		"maker_id": 1,
 		"brew_name": "maple mead",
 		"date_started": "2023-01-02T21:03:28.822Z",
 		"start_hydro_reading": 1.11,
@@ -12,7 +12,7 @@
 		"finished": true
 	},
 	{
-		"maker": "juzz0604",
+		"maker_id": 1,
 		"brew_name": "Strawberry wine",
 		"date_started": "2024-03-05T21:03:28.822Z",
 		"start_hydro_reading": 1.122,
@@ -23,7 +23,7 @@
 		"finished": false
 	},
 	{
-		"maker": "eleah2021",
+		"maker_id": 2,
 		"brew_name": "Cherry Wine",
 		"date_started": "2023-09-15T21:03:28.822Z",
 		"start_hydro_reading": 1.104,
@@ -34,7 +34,7 @@
 		"finished": false
 	},
 	{
-		"maker": "eleah2021",
+		"maker_id": 2,
 		"brew_name": "Lemon Mint and Lavender",
 		"date_started": "2024-03-14T21:03:28.822Z",
 		"start_hydro_reading": 1.088,
@@ -46,7 +46,7 @@
 		"finished": true
 	},
 	{
-		"maker": "eleah2021",
+		"maker_id": 2,
 		"brew_name": "Lavender",
 		"date_started": "2024-06-10T21:03:28.822Z",
 		"current_percentage": 0,

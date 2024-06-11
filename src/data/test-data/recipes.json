@@ -1,6 +1,6 @@
 [
 	{
-		"maker": "juzz0604",
+		"maker_id": 1,
 		"recipe_name": "Maple Mead",
 		"date_added": "2023-06-02T16:03:28.822Z",
 		"link": "https://www.growforagecookferment.com/maple-mead/",
@@ -10,7 +10,7 @@
 		"hidden": true
 	},
 	{
-		"maker": "eleah2021",
+		"maker_id": 2,
 		"recipe_name": "elderflower wine",
 		"date_added": "2024-06-02T21:03:28.822Z",
 		"body": "detailed recipe for making elderflower wine",
@@ -19,14 +19,14 @@
 		"hidden": false
 	},
 	{
-		"maker": "eleah2021",
+		"maker_id": 2,
 		"recipe_name": "strawberry wine",
 		"date_added": "2023-06-02T21:03:28.822Z",
 		"link": "www.strawberry-wine.com",
 		"image": "www.strawberry-wine/image.com"
 	},
 	{
-		"maker": "eleah2021",
+		"maker_id": 2,
 		"recipe_name": "lemon, mint and lavender",
 		"date_added": "2023-11-26T21:03:28.822Z",
 		"body": "a really detailed recipe on how to make lemon, mint and lavender wine",

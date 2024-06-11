@@ -1,54 +1,54 @@
 [
 	{
-		"maker": "juzz0604",
-		"wine_id": 1,
+		"maker_id": 1,
+		"brew_id": 1,
 		"date_added": "2023-01-03T21:03:28.822Z",
 		"type": "yeast-added",
 		"note_title": "Lalvin K1113 added",
 		"body": "didn't hydrate first"
 	},
 	{
-		"maker": "juzz0604",
-		"wine_id": 1,
+		"maker_id": 1,
+		"brew_id": 1,
 		"date_added": "2023-01-09T21:03:28.822Z",
 		"type": "moved-to-secondary",
 		"note_title": "moved-to-secondary"
 	},
 	{
-		"maker": "juzz0604",
-		"wine_id": 1,
+		"maker_id": 1,
+		"brew_id": 1,
 		"date_added": "2023-04-02T21:03:28.822Z",
 		"type": "tasting-note",
 		"note_title": "tasting-note",
 		"body": "very sweet still, not very orangey"
 	},
 	{
-		"maker": "juzz0604",
-		"wine_id": 1,
+		"maker_id": 1,
+		"brew_id": 1,
 		"date_added": "2023-04-02T21:03:28.822Z",
 		"type": "hydro-reading",
 		"note_title": "hydro-reading",
 		"body": 1.076
 	},
 	{
-		"maker": "juzz0604",
-		"wine_id": 1,
+		"maker_id": 1,
+		"brew_id": 1,
 		"date_added": "2023-06-02T21:03:28.822Z",
 		"type": "tasting-note",
 		"note_title": "tasting-note",
 		"body": 0.998
 	},
 	{
-		"maker": "juzz0604",
-		"wine_id": 1,
+		"maker_id": 1,
+		"brew_id": 1,
 		"date_added": "2023-06-02T21:03:28.822Z",
 		"type": "hydro-reading",
 		"note_title": "hydro-reading",
 		"body": 0.998
 	},
 	{
-		"maker": "juzz0604",
-		"wine_id": 1,
+		"maker_id": 1,
+		"brew_id": 1,
 		"date_added": "2023-06-02T21:03:28.822Z",
 		"type": "bottled",
 		"note_title": "Bottled 26 bottles",

@@ -10,13 +10,14 @@ export const dropTables = async () => {
 
 export const createTables = async () => {
 	await db.query(`CREATE TABLE users (
-        username VARCHAR PRIMARY KEY,
+        id SERIAL PRIMARY KEY,
+        username VARCHAR NOT NULL,
         password VARCHAR NOT NULL,
         email VARCHAR NOT NULL
     );`);
 	await db.query(`CREATE TABLE brews (
         id SERIAL PRIMARY KEY,
-        maker VARCHAR NOT NULL REFERENCES users(username),
+        maker_id INT NOT NULL REFERENCES users(id),
         brew_name VARCHAR NOT NULL,
         date_started VARCHAR NOT NULL,
         start_hydro_reading DECIMAL(4,3),
@@ -32,15 +33,15 @@ export const createTables = async () => {
     )`);
 	await db.query(`CREATE TABLE notes (
         id SERIAL PRIMARY KEY,
-        maker VARCHAR NOT NULL REFERENCES users(username),
-        wine_id INT NOT NULL REFERENCES brews(id),
+        maker_id INT NOT NULL REFERENCES users(id),
+        brew_id INT NOT NULL REFERENCES brews(id),
         type VARCHAR NOT NULL REFERENCES note_types(type),
         note_title VARCHAR NOT NULL,
         body TEXT
     );`);
 	await db.query(`CREATE TABLE recipes (
         id SERIAL PRIMARY KEY,
-        maker VARCHAR NOT NULL REFERENCES users(username),
+        maker_id INT NOT NULL REFERENCES users(id),
         recipe_name VARCHAR NOT NULL,
         date_added VARCHAR DEFAULT NOW(),
         link VARCHAR,

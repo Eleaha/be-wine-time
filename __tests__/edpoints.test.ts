@@ -42,13 +42,12 @@ describe("/api/users", () => {
 });
 
 describe("/api/users/:user_id", () => {
-	describe("GET /api/users/:username", () => {
-		test("GET 200 /api/users/:username - responds with an object containing user information plus number of completed and in progress brews", async () => {
-			const { body } = await request(app)
-				.get("/api/users/eleah2021")
-				.expect(200);
+	describe("GET /api/users/:user_id", () => {
+		test("GET 200 /api/users/:user_id - responds with an object containing user information plus number of completed and in progress brews", async () => {
+			const { body } = await request(app).get("/api/users/2").expect(200);
 			const { user } = body;
 			expect(user).toEqual({
+				id: 2,
 				username: "eleah2021",
 				password: "AlsoTobyCat123!",
 				email: "ellie4tobycat@hotmail.co.uk",
@@ -57,13 +56,13 @@ describe("/api/users/:user_id", () => {
 			});
 		});
 	});
-	test("GET 404 /api/users/:username - responds with a 404 error for a non existent username", async () => {
-		const { body } = await request(app).get("/api/users/garbage").expect(404);
+	test("GET 404 /api/users/:user_id - responds with a 404 error for a non existent user id", async () => {
+		const { body } = await request(app).get("/api/users/300").expect(404);
 		expect(body.msg).toBe("Not found");
 	});
-	test("GET 404 /api/users/:username - responds with a 404 error for a non existent username", async () => {
-		const { body } = await request(app).get("/api/users/garbage").expect(404);
-		expect(body.msg).toBe("Not found");
+	test("GET 400 /api/users/:user_id - responds with a 400 error for an invalid username", async () => {
+		const { body } = await request(app).get("/api/users/garbage").expect(400);
+		expect(body.msg).toBe("Bad request");
 	});
 });
 
@@ -76,7 +75,7 @@ describe("/api/brews", () => {
 			expect(brew).toEqual(
 				expect.objectContaining({
 					id: expect.any(Number),
-					maker: expect.any(String),
+					maker_id: expect.any(Number),
 					brew_name: expect.any(String),
 					date_started: expect.any(String),
 				})
@@ -95,7 +94,7 @@ describe("/api/brews", () => {
 			const { body } = await request(app).get("/api/brews/2").expect(200);
 			expect(body.brew).toMatchObject({
 				id: 2,
-				maker: "juzz0604",
+				maker_id: 1,
 				brew_name: "Strawberry wine",
 				date_started: "2024-03-05T21:03:28.822Z",
 				start_hydro_reading: "1.122",
