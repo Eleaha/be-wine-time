@@ -5,18 +5,20 @@ export const fetchUsers = async () => {
 	return rows;
 };
 
-export const fetchUserById = async (username: string) => {
+export const fetchUserById = async (username: number) => {
 	const { rows } = await db.query(
 		`
-	SELECT users.username, 
+	SELECT 
+	users.id,
+	users.username, 
 	users.password, 
 	users.email, 
-	COUNT(CASE WHEN brews.maker=$1 AND brews.finished=false THEN brews.maker END)::INT AS brews_in_progress,
-	COUNT(CASE WHEN brews.maker=$1 AND brews.finished=true THEN brews.maker END)::INT AS completed_brews
+	COUNT(CASE WHEN brews.maker_id=$1 AND brews.finished=false THEN brews.maker_id END)::INT AS brews_in_progress,
+	COUNT(CASE WHEN brews.maker_id=$1 AND brews.finished=true THEN brews.maker_id END)::INT AS completed_brews
 	FROM users
-	JOIN brews ON users.username = brews.maker
-	WHERE users.username = $1
-	GROUP BY users.username, users.password, users.email;
+	JOIN brews ON users.id = brews.maker_id
+	WHERE users.id = $1
+	GROUP BY users.id, users.username, users.password, users.email;
 	`,
 		[username]
 	);

@@ -22,12 +22,12 @@ export const seed = async ({
 	await db.query(insertUserData);
 
 	const insertBrewData = format(
-		`INSERT INTO brews (maker, brew_name, date_started, start_hydro_reading, current_percentage, recipe_id, yeast_used, volume_in_gals, date_finished, finished)
+		`INSERT INTO brews (maker_id, brew_name, date_started, start_hydro_reading, current_percentage, recipe_id, yeast_used, volume_in_gals, date_finished, finished)
     VALUES
     %L;`,
 		brewData.map(
 			({
-				maker,
+				maker_id,
 				brew_name,
 				date_started,
 				start_hydro_reading,
@@ -38,7 +38,7 @@ export const seed = async ({
 				date_finished,
 				finished,
 			}) => [
-				maker,
+				maker_id,
 				brew_name,
 				date_started,
 				start_hydro_reading,
@@ -62,12 +62,12 @@ export const seed = async ({
 	await db.query(insertNoteTypeData);
 
 	const insertNoteData = format(
-		`INSERT INTO notes (maker, wine_id, type, note_title, body)
+		`INSERT INTO notes (maker_id, brew_id, type, note_title, body)
     VALUES
     %L;`,
-		noteData.map(({ maker, wine_id, type, note_title, body }) => [
-			maker,
-			wine_id,
+		noteData.map(({ maker_id, brew_id, type, note_title, body }) => [
+			maker_id,
+			brew_id,
 			type,
 			note_title,
 			body,
@@ -76,12 +76,12 @@ export const seed = async ({
 	await db.query(insertNoteData);
 
 	const insertRecipeData = format(
-		`INSERT INTO recipes (maker, recipe_name, date_added, link, body, image, rating, hidden)
+		`INSERT INTO recipes (maker_id, recipe_name, date_added, link, body, image, rating, hidden)
     VALUES
     %L;`,
 		recipeData.map(
 			({
-				maker,
+				maker_id,
 				recipe_name,
 				date_added,
 				link,
@@ -89,7 +89,7 @@ export const seed = async ({
 				image,
 				rating,
 				hidden,
-			}) => [maker, recipe_name, date_added, link, body, image, rating, hidden]
+			}) => [maker_id, recipe_name, date_added, link, body, image, rating, hidden]
 		)
 	);
 	await db.query(insertRecipeData);

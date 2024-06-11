@@ -17,8 +17,8 @@ export const getUserById = async (
 	next: NextFunction
 ) => {
 	try {
-		const { username } = req.params;
-		const user: User = await fetchUserById(username);
+		const { user_id } = req.params;
+		const user: User = await fetchUserById(+user_id);
 		res.status(200).send({ user });
 	} catch (err) {
 		return next(err);

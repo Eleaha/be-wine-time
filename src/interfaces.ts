@@ -8,7 +8,7 @@ export interface Data {
 
 export interface Brew {
 	id?: number;
-	maker: string;
+	maker_id: number;
 	brew_name: string;
 	date_started: string;
 	start_hydro_reading?: number;
@@ -26,8 +26,8 @@ export interface NoteTypes {
 
 export interface Note {
 	id?: number;
-	maker: string;
-	wine_id: number;
+	maker_id: number;
+	brew_id: number;
 	date_added: string;
 	type: string;
 	note_title: string;
@@ -36,7 +36,7 @@ export interface Note {
 
 export interface Recipe {
 	id?: number;
-	maker: string;
+	maker_id: number;
 	recipe_name: string;
 	date_added: string;
 	link?: string;
