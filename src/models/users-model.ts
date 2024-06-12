@@ -5,7 +5,7 @@ export const fetchUsers = async () => {
 	return rows;
 };
 
-export const fetchUserById = async (username: number) => {
+export const fetchUserById = async (userId: number) => {
 	const { rows } = await db.query(
 		`
 	SELECT 
@@ -20,7 +20,7 @@ export const fetchUserById = async (username: number) => {
 	WHERE users.id = $1
 	GROUP BY users.id, users.username, users.password, users.email;
 	`,
-		[username]
+		[userId]
 	);
 
 	if (!rows.length) {
