@@ -1,5 +1,9 @@
 import { Request, Response, NextFunction } from "express";
-import { fetchBrewById, fetchBrews } from "../models/brews-model";
+import {
+	fetchBrewById,
+	fetchBrews,
+	fetchBrewsByUserId,
+} from "../models/brews-model";
 import { Brew } from "../interfaces";
 
 export const getBrews = async (
@@ -22,5 +26,19 @@ export const getBrewById = async (
 		return res.status(200).send({ brew });
 	} catch (err) {
 		return next(err);
+	}
+};
+
+export const getBrewsByUserId = async (
+	req: Request,
+	res: Response,
+	next: NextFunction
+) => {
+	const { user_id } = req.params;
+	try {
+		const brews: Brew[] = await fetchBrewsByUserId(+user_id);
+		return res.status(200).send({ brews });
+	} catch(err) {
+		return next(err)
 	}
 };

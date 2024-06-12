@@ -66,6 +66,47 @@ describe("/api/users/:user_id", () => {
 	});
 });
 
+describe("/api/users/:user_id/brews", () => {
+	test("GET 200 /api/users/:user_id/brews - responds with an array of brews relating to the current user", async () => {
+		const { body } = await request(app).get("/api/users/2/brews").expect(200);
+		const { brews } = body;
+		expect(brews).toHaveLength(3);
+		brews.forEach((brew: Brew) => {
+			expect(brew).toEqual(
+				expect.objectContaining({
+					id: expect.any(Number),
+					maker_id: expect.any(Number),
+					brew_name: expect.any(String),
+					date_started: expect.any(String),
+				})
+			);
+			expect(brew).toHaveProperty("start_hydro_reading");
+			expect(brew).toHaveProperty("current_percentage");
+			expect(brew).toHaveProperty("recipe_id");
+			expect(brew).toHaveProperty("yeast_used");
+			expect(brew).toHaveProperty("volume_in_gals");
+			expect(brew).toHaveProperty("date_finished");
+			expect(brew).toHaveProperty("finished");
+		});
+	});
+	test("GET 404 - responds with a 404 error when passed a non existent id", async () => {
+		const { body } = await request(app)
+			.get("/api/users/2000/brews")
+			.expect(404);
+		expect(body.msg).toBe("Not found");
+	});
+	test("GET 404 - responds with a special 404 error when passed an existing id with no associated brews", async () => {
+		const { body } = await request(app).get("/api/users/3/brews").expect(404);
+		expect(body.msg).toBe("No brews yet!");
+	});
+	test("GET 400 - responds with a 400 error when passed an invalid id", async () => {
+		const { body } = await request(app)
+			.get("/api/users/garbage/brews")
+			.expect(400);
+		expect(body.msg).toBe("Bad request");
+	});
+});
+
 describe("/api/brews", () => {
 	test("GET 200: /api/brews - responds with an array of all brews", async () => {
 		const { body } = await request(app).get("/api/brews").expect(200);
