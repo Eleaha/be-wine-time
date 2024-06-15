@@ -44,15 +44,15 @@ describe("/api/users", () => {
 describe("/api/users/:user_id", () => {
 	describe("GET /api/users/:user_id", () => {
 		test("GET 200 /api/users/:user_id - responds with an object containing user information plus number of completed and in progress brews", async () => {
-			const { body } = await request(app).get("/api/users/2").expect(200);
+			const { body } = await request(app).get("/api/users/3").expect(200);
 			const { user } = body;
 			expect(user).toEqual({
-				id: 2,
-				username: "eleah2021",
-				password: "AlsoTobyCat123!",
-				email: "ellie4tobycat@hotmail.co.uk",
-				brews_in_progress: 2,
-				completed_brews: 1,
+				id: 3,
+				username: "tobycatXOXO",
+				password: "theRealTobyCat#",
+				email: "tobycat@hotmail.co.uk",
+				brews_in_progress: 0,
+				completed_brews: 0,
 			});
 		});
 	});

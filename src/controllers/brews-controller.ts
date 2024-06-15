@@ -38,7 +38,7 @@ export const getBrewsByUserId = async (
 	try {
 		const brews: Brew[] = await fetchBrewsByUserId(+user_id);
 		return res.status(200).send({ brews });
-	} catch(err) {
-		return next(err)
+	} catch (err) {
+		return next(err);
 	}
 };
