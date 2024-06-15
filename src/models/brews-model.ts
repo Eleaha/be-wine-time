@@ -1,6 +1,6 @@
 import { db } from "../db/db-connection";
 import { User } from "../interfaces";
-import { fetchUsers } from "./users-model";
+import { fetchUserById, fetchUsers } from "./users-model";
 
 export const fetchBrews = async () => {
 	const { rows } = await db.query(`SELECT * FROM brews`);
@@ -22,13 +22,10 @@ export const fetchBrewsByUserId = async (userId: number) => {
 		[userId]
 	);
 	if (!rows.length) {
-		const users: User[] = await fetchUsers();
-		for (const user of users) {
-			if (user["id"] === userId) {
-				return Promise.reject({ status: 404, msg: "No brews yet!" });
-			}
+		const user: User = await fetchUserById(userId);
+		if (user["id"] === userId) {
+			return Promise.reject({ status: 404, msg: "No brews yet!" });
 		}
-		return Promise.reject({ status: 404, msg: "Not found" });
 	}
 	return rows;
 };

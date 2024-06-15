@@ -48,6 +48,8 @@ export const createTables = async () => {
         body TEXT,
         image VARCHAR,
         rating DECIMAL (2,1) DEFAULT 0,
-        hidden BOOL DEFAULT true
+        hidden BOOL DEFAULT true,
+        CHECK (rating >= 0 AND rating <= 5)
+
     );`);
 };
