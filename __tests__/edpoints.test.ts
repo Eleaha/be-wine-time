@@ -130,6 +130,9 @@ describe("/api/brews", () => {
 			expect(brew).toHaveProperty("finished");
 		});
 	});
+});
+
+describe("/api/brews/:brew_id", () => {
 	describe("GET /api/brews/:brew_id", () => {
 		test("GET 200: /api/brews/:brew_id - responds with an object containing the corresponding brew", async () => {
 			const { body } = await request(app).get("/api/brews/2").expect(200);
@@ -153,6 +156,27 @@ describe("/api/brews", () => {
 		test("GET 404: /abi/brew/:brew_id - responds with a 404 error when given a non-existent", async () => {
 			const { body } = await request(app).get("/api/brews/2000").expect(404);
 			expect(body.msg).toBe("Not found");
+		});
+	});
+	describe("DELETE /api/brews/:brew_id", () => {
+		test("DELETE 204 /api/brews/:brew_id - responds with only the status code when successfully deleted", async () => {
+			const brewBodyBefore: any = await request(app).get("/api/brews");
+			expect(brewBodyBefore["body"]["brews"]).toHaveLength(5);
+
+			const { body } = await request(app).delete("/api/brews/1").expect(204);
+
+			const brewBodyAfter: any = await request(app).get("/api/brews");
+			expect(brewBodyAfter["body"]["brews"]).toHaveLength(4);
+		});
+		test("DELETE 404 /api/brews/:brew_id - if the given id doesn't exist", async () => {
+			const { body } = await request(app).delete("/api/brews/5000").expect(404);
+			expect(body.msg).toBe("Not found");
+		});
+		test("DELETE 400 /api/brews/:brew_id - if given i d is invalid", async () => {
+			const { body } = await request(app)
+				.delete("/api/brews/garbage")
+				.expect(400);
+			expect(body.msg).toBe("Bad request");
 		});
 	});
 });
