@@ -1,5 +1,97 @@
 {
 	"GET /api": {
 		"description": "serves a json file detailing information on all available endpoints"
+	},
+	"GET /api/users": {
+		"description": "serves a an array of all users",
+		"example response": [
+			{
+				"id": 1,
+				"username": "username1",
+				"email": "user1@email.com",
+				"password": "aPassword123!"
+			}
+		]
+	},
+	"GET /api/users/:user_id": {
+		"description": "serves a an object relating to the specified user",
+		"example response": {
+			"id": 1,
+			"username": "username1",
+			"email": "user1@email.com",
+			"password": "aPassword123!"
+		}
+	},
+	"GET /api/users/:user_id/brews": {
+		"description": "serves a array of all brews associated to the specified user",
+		"example response": [
+			{
+				"id": 1,
+				"maker_id": 1,
+				"brew_name": "maple mead",
+				"date_started": "2023-01-02T21:03:28.822Z",
+				"start_hydro_reading": 1.11,
+				"current_percentage": 12.4,
+				"recipe_id": 2,
+				"yeast_used": "Lalvin k1113",
+				"volume_in_gals": 2,
+				"date_finished": "2024-06-02T21:03:28.822Z",
+				"finished": true
+			}
+		]
+	},
+	"POST /api/users:user_id/brews": {
+		"description": "serves an object relating to the specified brew",
+		"example response": [
+			{
+				"id": 1,
+				"maker_id": 1,
+				"brew_name": "maple mead",
+				"date_started": "2023-01-02T21:03:28.822Z",
+				"start_hydro_reading": 1.11,
+				"current_percentage": 12.4,
+				"recipe_id": 2,
+				"yeast_used": "Lalvin k1113",
+				"volume_in_gals": 2,
+				"date_finished": "2024-06-02T21:03:28.822Z",
+				"finished": true
+			}
+		]
+	},
+	"GET /api/brews": {
+		"description": "serves a an array of all brews",
+		"example response": [
+			{
+				"id": 1,
+				"maker_id": 1,
+				"brew_name": "maple mead",
+				"date_started": "2023-01-02T21:03:28.822Z",
+				"start_hydro_reading": 1.11,
+				"current_percentage": 12.4,
+				"recipe_id": 2,
+				"yeast_used": "Lalvin k1113",
+				"volume_in_gals": 2,
+				"date_finished": "2024-06-02T21:03:28.822Z",
+				"finished": true
+			}
+		]
+	},
+	"GET /api/brews/:brew_id": {
+		"description": "serves an object relating to the specified brew",
+		"example response": [
+			{
+				"id": 1,
+				"maker_id": 1,
+				"brew_name": "maple mead",
+				"date_started": "2023-01-02T21:03:28.822Z",
+				"start_hydro_reading": 1.11,
+				"current_percentage": 12.4,
+				"recipe_id": 2,
+				"yeast_used": "Lalvin k1113",
+				"volume_in_gals": 2,
+				"date_finished": "2024-06-02T21:03:28.822Z",
+				"finished": true
+			}
+		]
 	}
 }
