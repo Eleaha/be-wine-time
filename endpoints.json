@@ -93,5 +93,8 @@
 				"finished": true
 			}
 		]
+	},
+	"DELETE /api/brews/:brew_id": {
+		"description": "deletes the brew with the associates id, as well as any associated notes, responding with status code only"
 	}
 }

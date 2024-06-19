@@ -17,7 +17,7 @@ export const createTables = async () => {
     );`);
 	await db.query(`CREATE TABLE brews (
         id SERIAL PRIMARY KEY,
-        maker_id INT NOT NULL REFERENCES users(id),
+        maker_id INT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
         brew_name VARCHAR NOT NULL,
         date_started VARCHAR NOT NULL,
         start_hydro_reading DECIMAL(4,3),
@@ -34,7 +34,7 @@ export const createTables = async () => {
 	await db.query(`CREATE TABLE notes (
         id SERIAL PRIMARY KEY,
         maker_id INT NOT NULL REFERENCES users(id),
-        brew_id INT NOT NULL REFERENCES brews(id),
+        brew_id INT NOT NULL REFERENCES brews(id) ON DELETE CASCADE,
         type VARCHAR NOT NULL REFERENCES note_types(type),
         note_title VARCHAR NOT NULL,
         body TEXT
