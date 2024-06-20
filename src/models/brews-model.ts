@@ -1,3 +1,4 @@
+import { nextTick } from "process";
 import { db } from "../db/db-connection";
 import { User } from "../interfaces";
 import { fetchUserById, fetchUsers } from "./users-model";
@@ -28,4 +29,16 @@ export const fetchBrewsByUserId = async (userId: number) => {
 		}
 	}
 	return rows;
+};
+
+export const removeBrewById = async (brewId: number) => {
+	const { rows } = await db.query(
+		`DELETE FROM brews
+		WHERE id = $1
+		RETURNING *;`,
+		[brewId]
+	);
+	if (!rows.length) {
+		return Promise.reject({ status: 404, msg: "Not found" });
+	}
 };
