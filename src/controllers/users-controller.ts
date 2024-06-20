@@ -1,6 +1,10 @@
 import { Request, Response, NextFunction } from "express";
-import { User } from "../interfaces";
-import { fetchUserById, fetchUsers } from "../models/users-model";
+import { Brew, User } from "../interfaces";
+import {
+    fetchUserById,
+    fetchUsers,
+    insertBrewByUserId,
+} from "../models/users-model";
 
 export const getUsers = async (
 	req: Request,
@@ -23,4 +27,19 @@ export const getUserById = async (
 	} catch (err) {
 		return next(err);
 	}
+};
+
+export const postBrewByUserId = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
+    try {
+        const { user_id } = req.params;
+        const newBrew: Brew = { maker_id: user_id, ...req.body };
+        const brew: Brew = await insertBrewByUserId(newBrew);
+        res.status(201).send({ brew });
+    } catch (err) {
+        return next(err);
+    }
 };
