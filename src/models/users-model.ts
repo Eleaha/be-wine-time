@@ -1,13 +1,15 @@
 import { db } from "../db/db-connection";
+import { Brew } from "../interfaces";
+import format from "pg-format";
 
 export const fetchUsers = async () => {
-	const { rows } = await db.query(`SELECT * FROM users`);
-	return rows;
+    const { rows } = await db.query(`SELECT * FROM users`);
+    return rows;
 };
 
 export const fetchUserById = async (userId: number) => {
-	const { rows } = await db.query(
-		`
+    const { rows } = await db.query(
+        `
 	SELECT 
 	users.id,
 	users.username, 
@@ -20,12 +22,28 @@ export const fetchUserById = async (userId: number) => {
 	WHERE users.id = $1
 	GROUP BY users.id, users.username, users.password, users.email;
 	`,
-		[userId]
-	);
+        [userId]
+    );
 
-	if (!rows.length) {
-		return Promise.reject({ status: 404, msg: "Not found" });
-	}
+    if (!rows.length) {
+        return Promise.reject({ status: 404, msg: "Not found" });
+    }
 
-	return rows[0];
+    return rows[0];
+};
+
+export const insertBrewByUserId = async (payload: Brew) => {
+    const cols: string[] = Object.keys(payload);
+    const values: any[] = Object.values(payload);
+
+    const colString = cols.join(", ");
+    const queryString: string = format(
+        `
+		INSERT INTO brews (${colString})
+		VALUES %L
+		RETURNING *`,
+        [values]
+    );
+	const { rows } = await db.query(queryString);
+    return rows[0];
 };

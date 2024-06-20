@@ -8,7 +8,7 @@ export interface Data {
 
 export interface Brew {
 	id?: number;
-	maker_id: number;
+	maker_id?: number;
 	brew_name: string;
 	date_started: string;
 	start_hydro_reading?: number;
