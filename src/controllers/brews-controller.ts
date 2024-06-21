@@ -56,8 +56,7 @@ export const patchBrewById = async (
 		const brew: Brew = await updateBrewById(+brew_id, patchObject);
 		res.status(200).send({ brew });
 	} catch(err) {
-		console.log(err);
-		
+		return next(err)
 	}
 };
 

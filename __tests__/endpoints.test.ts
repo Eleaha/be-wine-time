@@ -232,7 +232,7 @@ describe("/api/brews/:brew_id", () => {
 		});
 	});
 	describe("PATCH /api/brews/:brew_id", () => {
-		test("PATCH 200 /api/brews/:brew_id - reponds with updated brew object", async () => {
+		test("PATCH 200 /api/brews/:brew_id - responds with updated brew object", async () => {
 			const payload = {
 				recipe_id: 4,
 				yeast_used: "Lalvin e118",
@@ -254,6 +254,44 @@ describe("/api/brews/:brew_id", () => {
 				date_finished: null,
 				finished: false,
 			});
+		});
+		test("PATCH 400 /api/brews/:brew_id - invalid request format", async () => {
+			const { body } = await request(app)
+				.patch("/api/brews/5")
+				.send({
+					garbage: true,
+				})
+				.expect(400);
+			expect(body.msg).toBe("Bad request");
+		});
+		test("PATCH 400 /api/brews/:brew_id - invalid datatypes", async () => {
+			const { body } = await request(app)
+				.patch("/api/brews/5")
+				.send({
+					finished: "yes it has",
+				})
+				.expect(400);
+			expect(body.msg).toBe("Bad request");
+		});
+		test("PATCH 404 /api/brews/:brew_id - non existent brew id", async () => {
+			const { body } = await request(app)
+				.patch("/api/brews/3000")
+				.send({
+					recipe_id: 4,
+					yeast_used: "Lalvin e118",
+				})
+				.expect(404);
+			expect(body.msg).toBe("Not found");
+		});
+		test("PATCH 400 /api/brews/:brew_id - invalid brew id", async () => {
+			const { body } = await request(app)
+				.patch("/api/brews/garbage")
+				.send({
+					recipe_id: 4,
+					yeast_used: "Lalvin e118",
+				})
+				.expect(400);
+			expect(body.msg).toBe("Bad request");
 		});
 	});
 	describe("DELETE /api/brews/:brew_id", () => {
