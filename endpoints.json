@@ -1,10 +1,10 @@
 {
 	"GET /api": {
-		"description": "serves a json file detailing information on all available endpoints"
+		"description": "serves a json file detailing information on all available endpoints and what they do"
 	},
 	"GET /api/users": {
-		"description": "serves a an array of all users",
-		"example response": [
+		"description": "serves an array of all users",
+		"example-response": [
 			{
 				"id": 1,
 				"username": "username1",
@@ -14,8 +14,8 @@
 		]
 	},
 	"GET /api/users/:user_id": {
-		"description": "serves a an object relating to the specified user",
-		"example response": {
+		"description": "serves an object relating to the specified user",
+		"example-response": {
 			"id": 1,
 			"username": "username1",
 			"email": "user1@email.com",
@@ -23,8 +23,8 @@
 		}
 	},
 	"GET /api/users/:user_id/brews": {
-		"description": "serves a array of all brews associated to the specified user",
-		"example response": [
+		"description": "serves an array of all brews associated to the specified user",
+		"example-response": [
 			{
 				"id": 1,
 				"maker_id": 1,
@@ -40,27 +40,29 @@
 			}
 		]
 	},
-	"POST /api/users:user_id/brews": {
-		"description": "serves an object relating to the specified brew",
-		"example response": [
-			{
-				"id": 1,
-				"maker_id": 1,
-				"brew_name": "maple mead",
-				"date_started": "2023-01-02T21:03:28.822Z",
-				"start_hydro_reading": 1.11,
-				"current_percentage": 12.4,
-				"recipe_id": 2,
-				"yeast_used": "Lalvin k1113",
-				"volume_in_gals": 2,
-				"date_finished": "2024-06-02T21:03:28.822Z",
-				"finished": true
-			}
-		]
+	"POST /api/users/:user_id/brews": {
+		"description": "adds a new brew associated to the given user and responds with an object containing the new brew",
+		"example-payload": {
+			"brew_name": "Cherry Wine",
+			"date_started": "2024-06-10T21:03:28.822Z"
+		},
+		"example-response": {
+			"id": 6,
+			"maker_id": 2,
+			"brew_name": "Cherry Wine",
+			"date_started": "2024-06-10T21:03:28.822Z",
+			"start_hydro_reading": null,
+			"current_percentage": "0.0",
+			"recipe_id": null,
+			"yeast_used": null,
+			"volume_in_gals": null,
+			"date_finished": null,
+			"finished": false
+		}
 	},
 	"GET /api/brews": {
 		"description": "serves a an array of all brews",
-		"example response": [
+		"example-response": [
 			{
 				"id": 1,
 				"maker_id": 1,
@@ -77,8 +79,8 @@
 		]
 	},
 	"GET /api/brews/:brew_id": {
-		"description": "serves an object relating to the specified brew",
-		"example response": [
+		"description": "serves an object to the specified brew",
+		"example-response": [
 			{
 				"id": 1,
 				"maker_id": 1,
@@ -93,6 +95,26 @@
 				"finished": true
 			}
 		]
+	},
+	"PATCH /api/brews/:brew_id": {
+		"description": "updates an existing brew and serves an object relating to the updated brew",
+		"example-payload": {
+			"recipe_id": 4,
+			"yeast_used": "Lalvin e118"
+		},
+		"example-response": {
+			"id": 5,
+			"maker_id": 2,
+			"brew_name": "Lavender",
+			"date_started": "2024-06-10T21:03:28.822Z",
+			"start_hydro_reading": null,
+			"current_percentage": "0.0",
+			"recipe_id": 4,
+			"yeast_used": "Lalvin e118",
+			"volume_in_gals": null,
+			"date_finished": null,
+			"finished": false
+		}
 	},
 	"DELETE /api/brews/:brew_id": {
 		"description": "deletes the brew with the associates id, as well as any associated notes, responding with status code only"
