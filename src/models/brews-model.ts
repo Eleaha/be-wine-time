@@ -2,6 +2,7 @@ import { nextTick } from "process";
 import { db } from "../db/db-connection";
 import { User } from "../interfaces";
 import { fetchUserById, fetchUsers } from "./users-model";
+import { formatPatchString } from "../utils";
 
 export const fetchBrews = async () => {
 	const { rows } = await db.query(`SELECT * FROM brews`);
@@ -30,6 +31,16 @@ export const fetchBrewsByUserId = async (userId: number) => {
 	}
 	return rows;
 };
+
+export const updateBrewById = async (brewId: number, updateObj: {[index: string]: any}) => {
+	const setString: string = formatPatchString(updateObj);
+	const queryString = `UPDATE brews SET ${setString} WHERE id = $1 RETURNING *;`;
+	
+	const { rows } = await db.query(queryString, [brewId]);
+	return !rows.length
+		? Promise.reject({ status: 404, msg: "Not found" })
+		: rows[0];
+}
 
 export const removeBrewById = async (brewId: number) => {
 	const { rows } = await db.query(

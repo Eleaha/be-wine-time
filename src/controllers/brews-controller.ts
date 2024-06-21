@@ -4,6 +4,7 @@ import {
 	fetchBrews,
 	fetchBrewsByUserId,
 	removeBrewById,
+	updateBrewById,
 } from "../models/brews-model";
 import { Brew } from "../interfaces";
 
@@ -41,6 +42,21 @@ export const getBrewsByUserId = async (
 		return res.status(200).send({ brews });
 	} catch (err) {
 		return next(err);
+	}
+};
+
+export const patchBrewById = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
+	const { brew_id } = req.params
+	const patchObject = req.body;
+	try {
+		const brew: Brew = await updateBrewById(+brew_id, patchObject);
+		res.status(200).send({ brew });
+	} catch(err) {
+		return next(err)
 	}
 };
 
