@@ -7,7 +7,6 @@ import {
 	updateBrewById,
 } from "../models/brews-model";
 import { Brew } from "../interfaces";
-import { log } from "console";
 
 export const getBrews = async (
 	req: Request,
@@ -52,8 +51,10 @@ export const patchBrewById = async (
     next: NextFunction
 ) => {
 	const { brew_id } = req.params
+	const patchObject = req.body;
 	try {
-		const patchedBrew: Brew = await updateBrewById(+brew_id)
+		const brew: Brew = await updateBrewById(+brew_id, patchObject);
+		res.status(200).send({ brew });
 	} catch(err) {
 		console.log(err);
 		
