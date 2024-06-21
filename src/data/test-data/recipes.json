@@ -23,7 +23,9 @@
 		"recipe_name": "strawberry wine",
 		"date_added": "2023-06-02T21:03:28.822Z",
 		"link": "www.strawberry-wine.com",
-		"image": "www.strawberry-wine/image.com"
+		"image": "www.strawberry-wine/image.com",
+		"rating": 0.0,
+		"hidden": true
 	},
 	{
 		"maker_id": 2,
