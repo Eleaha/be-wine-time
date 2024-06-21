@@ -31,6 +31,19 @@ export const fetchBrewsByUserId = async (userId: number) => {
 	return rows;
 };
 
+export const updateBrewById = async (brewId: number, updateObj: {}) => {
+	const setString: string = ''
+
+	const { rows } = await db.query(`
+		UPDATE brews
+		SET $1
+		WHERE id = $2
+		RETURNING *
+		`,
+		[setString, brewId]
+	)
+}
+
 export const removeBrewById = async (brewId: number) => {
 	const { rows } = await db.query(
 		`DELETE FROM brews

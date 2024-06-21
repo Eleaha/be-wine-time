@@ -236,7 +236,20 @@ describe("/api/brews/:brew_id", () => {
 			const { body } = await request(app).get("/api/brews/2000").expect(404);
 			expect(body.msg).toBe("Not found");
 		});
-	});
+    });
+    describe("PATCH /api/brews/:brew_id", () => {
+        test("PATCH 200 /api/brews/:brew_id - reponds with updated brew object", async () => {
+            const payload = {
+                recipe_id: 4,
+                yeast_used: "Lalvin e118",
+            };
+            const { body } = await request(app).patch("/api/brews/5").send(payload).expect(200)
+            console.log(body)
+            expect(body['brew']).toMatchObject({
+
+            })
+        })
+    })
 	describe("DELETE /api/brews/:brew_id", () => {
 		test("DELETE 204 /api/brews/:brew_id - responds with only the status code when successfully deleted", async () => {
 			const brewBodyBefore: any = await request(app).get("/api/brews");
