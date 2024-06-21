@@ -5,6 +5,7 @@ import cors from "cors";
 import { brewsRouter } from "./src/routes/brews-router";
 import { handleErrors } from "./error-handling";
 import { usersRouter } from "./src/routes/users-router";
+import { recipesRouter } from "./src/routes/recipes-router";
 
 dotenv.config();
 
@@ -17,6 +18,7 @@ app.use(express.json());
 app.use("/api", apiRouter);
 app.use("/api/brews", brewsRouter);
 app.use("/api/users", usersRouter);
+app.use("/api/recipes", recipesRouter)
 
 app.all("*", (req: Request, res: Response, next: NextFunction) => {
 	res.status(404).send({ msg: "Not found" });

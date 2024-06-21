@@ -3,7 +3,7 @@ import { app } from "../app";
 import { seed } from "../src/db/seed";
 import { data } from "../src/data/test-data/data-index";
 import { db } from "../src/db/db-connection";
-import { Brew, User } from "../src/interfaces";
+import { Brew, Recipe, User } from "../src/interfaces";
 import endpoints from "../endpoints.json";
 
 afterAll(() => db.end());
@@ -313,6 +313,27 @@ describe("/api/brews/:brew_id", () => {
 				.delete("/api/brews/garbage")
 				.expect(400);
 			expect(body.msg).toBe("Bad request");
+		});
+	});
+});
+
+describe("/api/recipes", () => {
+	describe("GET /api/recipes", () => {
+		test("GET 200 /api/recipes - responds with an array of all recipes", async () => {
+			const { body } = await request(app).get("/api/recipes").expect(200);
+			const { recipes } = body;
+
+			expect(recipes).toHaveLength(4);
+			recipes.map((recipe: Recipe) => {
+				expect(recipe).toMatchObject({
+					id: expect.any(Number),
+					maker_id: expect.any(Number),
+					recipe_name: expect.any(String),
+					date_added: expect.any(String),
+					rating: expect.any(String),
+					hidden: expect.any(Boolean),
+				});
+			});
 		});
 	});
 });
