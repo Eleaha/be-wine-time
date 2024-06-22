@@ -39,11 +39,11 @@ export interface Recipe {
 	maker_id: number;
 	recipe_name: string;
 	date_added: string;
-	link?: string;
-	body?: string;
-	image?: string;
-	rating?: number;
-	hidden?: boolean;
+	link?: string | null;
+	body?: string | null;
+	image?: string | null;
+	rating?: number | null;
+	hidden?: boolean | null;
 }
 
 export interface User {

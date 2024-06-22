@@ -91,9 +91,7 @@ describe("/api/users/:user_id/brews", () => {
 			});
 		});
 		test("GET 404 - responds with a 404 error when passed a non existent id", async () => {
-			const { body } = await request(app)
-				.get("/api/users/2000/brews")
-				.expect(404);
+			const { body } = await request(app).get("/api/users/2000/brews").expect(404);
 			expect(body.msg).toBe("Not found");
 		});
 		test("GET 404 - responds with a special 404 error when passed an existing id with no associated brews", async () => {
@@ -309,9 +307,7 @@ describe("/api/brews/:brew_id", () => {
 			expect(body.msg).toBe("Not found");
 		});
 		test("DELETE 400 /api/brews/:brew_id - if given i d is invalid", async () => {
-			const { body } = await request(app)
-				.delete("/api/brews/garbage")
-				.expect(400);
+			const { body } = await request(app).delete("/api/brews/garbage").expect(400);
 			expect(body.msg).toBe("Bad request");
 		});
 	});
@@ -333,7 +329,38 @@ describe("/api/recipes", () => {
 					rating: expect.any(String),
 					hidden: expect.any(Boolean),
 				});
+				expect(recipe).toHaveProperty("link");
+				expect(recipe).toHaveProperty("body");
+				expect(recipe).toHaveProperty("image");
 			});
+		});
+	});
+});
+
+describe("/api/recipes/:recipe_id", () => {
+	describe("GET /api/recipes/:recipe_id", () => {
+		test("GET 200 /api/recipes/:recipes_id - responds with an object relating to the specified id", async () => {
+			const { body } = await request(app).get("/api/recipes/1").expect(200);
+			const { recipe } = body;
+			expect(recipe).toMatchObject({
+				id: 1,
+				maker_id: 1,
+				recipe_name: "Maple Mead",
+				date_added: "2023-06-02T16:03:28.822Z",
+				link: "https://www.growforagecookferment.com/maple-mead/",
+				body: "used 300g more honey",
+				image: "www.test/image",
+				rating: "0.0",
+				hidden: true,
+			});
+		});
+		test("GET 404 /api/recipes/:recipes_id - non-existant id is given", async () => {
+			const { body } = await request(app).get("/api/recipes/3000").expect(404);
+			expect(body["msg"]).toBe("Not found");
+		});
+		test("GET 400 /api/recipes/:recipes_id - invalid id is given", async () => {
+			const { body } = await request(app).get("/api/recipes/garbage").expect(400);
+			expect(body["msg"]).toBe("Bad request");
 		});
 	});
 });
