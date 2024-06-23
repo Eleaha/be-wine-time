@@ -178,6 +178,46 @@ describe("/api/users/:user_id/brews", () => {
 	});
 });
 
+describe("/api/users/:user_id/recipes", () => {
+	describe("GET /api/users/:user_id/recipes", () => {
+		test("GET 200 /api/users/:user_id/recipes - responds with an array of recipes related to the specified user", async () => {
+			const { body } = await request(app).get("/api/users/2/recipes").expect(200);
+			const { recipes } = body;
+			expect(recipes).toHaveLength(3);
+			recipes.forEach((recipe: Recipe) => {
+				expect(recipe).toMatchObject({
+					id: expect.any(Number),
+					maker_id: expect.any(Number),
+					recipe_name: expect.any(String),
+					date_added: expect.any(String),
+					rating: expect.any(String),
+					hidden: expect.any(Boolean),
+				});
+				expect(recipe).toHaveProperty("link");
+				expect(recipe).toHaveProperty("body");
+				expect(recipe).toHaveProperty("image");
+			});
+		});
+		test("GET 404 /api/users/:user_id/recipes - given a non-existent id", async () => {
+			const { body } = await request(app)
+				.get("/api/users/3000/recipes")
+				.expect(404);
+			expect(body["msg"]).toBe("Not found");
+		});
+		test("GET 400 /api/users/:user_id/recipes - given an invalid id", async () => {
+			const { body } = await request(app)
+				.get("/api/users/garbage/recipes")
+				.expect(400);
+			expect(body["msg"]).toBe("Bad request");
+		});
+		//user exists but no associated recipes
+		test("GET 404 /api/users/:user_id/recipes - given a valid id with no associated recipes", async () => {
+			const { body } = await request(app).get("/api/users/3/recipes").expect(404);
+			expect(body["msg"]).toBe("No recipes yet!");
+		});
+	});
+});
+
 describe("/api/brews", () => {
 	test("GET 200: /api/brews - responds with an array of all brews", async () => {
 		const { body } = await request(app).get("/api/brews").expect(200);
