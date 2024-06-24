@@ -50,8 +50,12 @@ export const postRecipeByUserId = async (
     res: Response,
     next: NextFunction
 ) => {
-    const { user_id } = req.params;
+	try {
+		const { user_id } = req.params;
 	const payload: Recipe = { maker_id: user_id, ...req.body };
 	const recipe: Recipe = await insertRecipeByUserId(payload)
-	res.status(201).send({ recipe })
+		res.status(201).send({ recipe })
+	} catch (err) {
+		return next(err)
+	}
 };

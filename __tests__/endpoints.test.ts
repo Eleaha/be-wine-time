@@ -222,7 +222,10 @@ describe("/api/users/:user_id/recipes", () => {
                 recipe_name: "Rubarb wine",
                 body: "Excepteur consequat exercitation sit nulla eu quis qui Lorem proident cupidatat labore non incididunt.",
             };
-            const { body } = await request(app).post("/api/users/3/recipes").expect(201).send(payload)
+            const { body } = await request(app)
+                .post("/api/users/3/recipes")
+                .expect(201)
+                .send(payload);
             const { recipe } = body;
             expect(recipe).toMatchObject({
                 maker_id: 3,
@@ -234,6 +237,50 @@ describe("/api/users/:user_id/recipes", () => {
                 rating: "0.0",
                 hidden: true,
             });
+        });
+		test("POST 400 /api/users/:user_id/recipes - when given an invalid post body structure", async () => {
+            const payload = {
+                garbage: "also garbage",
+            };
+            const { body } = await request(app)
+                .post("/api/users/3/recipes")
+                .send(payload)
+                .expect(400);
+            expect(body["msg"]).toBe("Bad request");
+        });
+        test("POST 400 /api/users/:user_id/recipes - when given an invalid post body types", async () => {
+            const payload = {
+                recipe_name: "Rubarb wine",
+                body: "Excepteur consequat exercitation sit nulla eu quis qui Lorem proident cupidatat labore non incididunt.",
+                hidded: "maybe",
+            };
+            const { body } = await request(app)
+                .post("/api/users/3/recipes")
+                .send(payload)
+                .expect(400);
+            expect(body["msg"]).toBe("Bad request");
+        });
+        test("POST 400 /api/users/:user_id/recipes - when given an invalid user id", async () => {
+            const payload = {
+                recipe_name: "Rubarb wine",
+                body: "Excepteur consequat exercitation sit nulla eu quis qui Lorem proident cupidatat labore non incididunt.",
+            };
+            const { body } = await request(app)
+                .post("/api/users/garbage/recipes")
+                .send(payload)
+                .expect(400);
+            expect(body["msg"]).toBe("Bad request");
+        });
+        test("POST 404 /api/users/:user_id/recipes - when given a non-existant user id", async () => {
+            const payload = {
+                recipe_name: "Rubarb wine",
+                body: "Excepteur consequat exercitation sit nulla eu quis qui Lorem proident cupidatat labore non incididunt.",
+            };
+            const { body } = await request(app)
+                .post("/api/users/3000/recipes")
+                .send(payload)
+                .expect(404);
+            expect(body["msg"]).toBe("Not found");
         });
     });
 });
