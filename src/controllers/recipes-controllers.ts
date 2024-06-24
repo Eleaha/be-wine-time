@@ -5,6 +5,7 @@ import {
 	fetchRecipeById,
 	fetchRecipesByUserId,
 } from "../models/recipes-model";
+import { insertRecipeByUserId } from "../models/users-model";
 
 export const getRecipes = async (
 	req: Request,
@@ -46,4 +47,19 @@ export const getRecipesByUserId = async (
 	} catch (err) {
 		return next(err);
 	}
+};
+
+export const postRecipeByUserId = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
+    try {
+        const { user_id } = req.params;
+        const payload: Recipe = { maker_id: user_id, ...req.body };
+        const recipe: Recipe = await insertRecipeByUserId(payload);
+        res.status(201).send({ recipe });
+    } catch (err) {
+        return next(err);
+    }
 };

@@ -19,7 +19,5 @@ export const handleErrors = (
 
 	if (notFoundCodes.includes(err["code"])) {
         res.status(404).send({ msg: "Not found" });
-	}
-	
-	res.status(500).send({msg: "Internal server error"})
+    }
 };

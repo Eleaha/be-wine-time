@@ -1,14 +1,12 @@
 import express, { Router } from "express";
+import { getUserById, getUsers } from "../controllers/users-controller";
 import {
-	getUserById,
-	getUsers,
-	postBrewByUserId,
-	postRecipeByUserId,
-} from "../controllers/users-controller";
-import { getBrewsByUserId } from "../controllers/brews-controller";
+    getBrewsByUserId,
+    postBrewByUserId,
+} from "../controllers/brews-controller";
 import {
-	getRecipeById,
-	getRecipesByUserId,
+    getRecipesByUserId,
+    postRecipeByUserId,
 } from "../controllers/recipes-controllers";
 
 export const usersRouter: Router = express.Router();

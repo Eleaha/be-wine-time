@@ -27,3 +27,7 @@ app.all("*", (req: Request, res: Response, next: NextFunction) => {
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {
 	handleErrors(err, req, res, next);
 });
+
+app.use((err: any, req: Request, res: Response, next: NextFunction) => {
+    res.status(500).send({ msg: "Internal server error" });
+});
