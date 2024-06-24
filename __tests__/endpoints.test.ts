@@ -216,6 +216,26 @@ describe("/api/users/:user_id/recipes", () => {
 			expect(body["msg"]).toBe("No recipes yet!");
 		});
 	});
+	describe("POST /api/users/:user_id/recipes", () => {
+        test("POST 201 /api/users/:user_id/recipes - responds with the newly created recipe object", async () => {
+            const payload = {
+                recipe_name: "Rubarb wine",
+                body: "Excepteur consequat exercitation sit nulla eu quis qui Lorem proident cupidatat labore non incididunt.",
+            };
+            const { body } = await request(app).post("/api/users/3/recipes").expect(201).send(payload)
+            const { recipe } = body;
+            expect(recipe).toMatchObject({
+                maker_id: 3,
+                recipe_name: "Rubarb wine",
+                date_added: expect.any(String),
+                body: "Excepteur consequat exercitation sit nulla eu quis qui Lorem proident cupidatat labore non incididunt.",
+                link: null,
+                image: null,
+                rating: "0.0",
+                hidden: true,
+            });
+        });
+    });
 });
 
 describe("/api/brews", () => {

@@ -1,5 +1,5 @@
 import { db } from "../db/db-connection";
-import { Brew } from "../interfaces";
+import { Brew, Recipe } from "../interfaces";
 import format from "pg-format";
 
 export const fetchUsers = async () => {
@@ -47,3 +47,19 @@ export const insertBrewByUserId = async (payload: Brew) => {
 	const { rows } = await db.query(queryString);
     return rows[0];
 };
+
+export const insertRecipeByUserId = async (payload: Recipe) => {
+    const cols: string[] = Object.keys(payload)
+    const values: any[] = Object.values(payload)
+
+    const colString = cols.join(", ")
+    const queryString: string = format(
+        `
+        INSERT INTO recipes (${colString})
+        VALUES %L
+        RETURNING *`,
+        [values]
+    )
+    const { rows } = await db.query(queryString)
+    return rows[0]
+}
