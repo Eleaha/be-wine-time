@@ -6,7 +6,6 @@
 		"link": "https://www.growforagecookferment.com/maple-mead/",
 		"body": "used 300g more honey",
 		"image": "www.test/image",
-		"rating": 0,
 		"hidden": true
 	},
 	{
@@ -16,7 +15,6 @@
 		"body": "detailed recipe for making elderflower wine",
 		"link": null,
 		"image": "www.elderflower-wine/image",
-		"rating": 2.6,
 		"hidden": false
 	},
 	{
@@ -26,7 +24,6 @@
 		"body": null,
 		"link": "www.strawberry-wine.com",
 		"image": "www.strawberry-wine/image.com",
-		"rating": 0.0,
 		"hidden": true
 	},
 	{
@@ -36,7 +33,6 @@
 		"body": "a really detailed recipe on how to make lemon, mint and lavender wine",
 		"link": null,
 		"image": "uploaded lemon mint and lavender pic",
-		"rating": 4.6,
 		"hidden": false
 	}
 ]
