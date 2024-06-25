@@ -179,44 +179,46 @@ describe("/api/users/:user_id/brews", () => {
 });
 
 describe("/api/users/:user_id/recipes", () => {
-	describe("GET /api/users/:user_id/recipes", () => {
-		test("GET 200 /api/users/:user_id/recipes - responds with an array of recipes related to the specified user", async () => {
-			const { body } = await request(app).get("/api/users/2/recipes").expect(200);
-			const { recipes } = body;
-			expect(recipes).toHaveLength(3);
-			recipes.forEach((recipe: Recipe) => {
-				expect(recipe).toMatchObject({
-					id: expect.any(Number),
-					maker_id: expect.any(Number),
-					recipe_name: expect.any(String),
-					date_added: expect.any(String),
-					rating: expect.any(String),
-					hidden: expect.any(Boolean),
-				});
-				expect(recipe).toHaveProperty("link");
-				expect(recipe).toHaveProperty("body");
-				expect(recipe).toHaveProperty("image");
-			});
-		});
-		test("GET 404 /api/users/:user_id/recipes - given a non-existent id", async () => {
-			const { body } = await request(app)
-				.get("/api/users/3000/recipes")
-				.expect(404);
-			expect(body["msg"]).toBe("Not found");
-		});
-		test("GET 400 /api/users/:user_id/recipes - given an invalid id", async () => {
-			const { body } = await request(app)
-				.get("/api/users/garbage/recipes")
-				.expect(400);
-			expect(body["msg"]).toBe("Bad request");
-		});
-		//user exists but no associated recipes
-		test("GET 404 /api/users/:user_id/recipes - given a valid id with no associated recipes", async () => {
-			const { body } = await request(app).get("/api/users/3/recipes").expect(404);
-			expect(body["msg"]).toBe("No recipes yet!");
-		});
-	});
-	describe("POST /api/users/:user_id/recipes", () => {
+    describe("GET /api/users/:user_id/recipes", () => {
+        test("GET 200 /api/users/:user_id/recipes - responds with an array of recipes related to the specified user", async () => {
+            const { body } = await request(app)
+                .get("/api/users/2/recipes")
+                .expect(200);
+            const { recipes } = body;
+            expect(recipes).toHaveLength(3);
+            recipes.forEach((recipe: Recipe) => {
+                expect(recipe).toMatchObject({
+                    id: expect.any(Number),
+                    maker_id: expect.any(Number),
+                    recipe_name: expect.any(String),
+                    date_added: expect.any(String),
+                    hidden: expect.any(Boolean),
+                });
+                expect(recipe).toHaveProperty("link");
+                expect(recipe).toHaveProperty("body");
+                expect(recipe).toHaveProperty("image");
+            });
+        });
+        test("GET 404 /api/users/:user_id/recipes - given a non-existent id", async () => {
+            const { body } = await request(app)
+                .get("/api/users/3000/recipes")
+                .expect(404);
+            expect(body["msg"]).toBe("Not found");
+        });
+        test("GET 400 /api/users/:user_id/recipes - given an invalid id", async () => {
+            const { body } = await request(app)
+                .get("/api/users/garbage/recipes")
+                .expect(400);
+            expect(body["msg"]).toBe("Bad request");
+        });
+        test("GET 404 /api/users/:user_id/recipes - given a valid id with no associated recipes", async () => {
+            const { body } = await request(app)
+                .get("/api/users/3/recipes")
+                .expect(404);
+            expect(body["msg"]).toBe("No recipes yet!");
+        });
+    });
+    describe("POST /api/users/:user_id/recipes", () => {
         test("POST 201 /api/users/:user_id/recipes - responds with the newly created recipe object", async () => {
             const payload = {
                 recipe_name: "Rubarb wine",
@@ -234,11 +236,10 @@ describe("/api/users/:user_id/recipes", () => {
                 body: "Excepteur consequat exercitation sit nulla eu quis qui Lorem proident cupidatat labore non incididunt.",
                 link: null,
                 image: null,
-                rating: "0.0",
                 hidden: true,
             });
         });
-		test("POST 400 /api/users/:user_id/recipes - when given an invalid post body structure", async () => {
+        test("POST 400 /api/users/:user_id/recipes - when given an invalid post body structure", async () => {
             const payload = {
                 garbage: "also garbage",
             };
@@ -286,188 +287,269 @@ describe("/api/users/:user_id/recipes", () => {
 });
 
 describe("/api/brews", () => {
-	test("GET 200: /api/brews - responds with an array of all brews", async () => {
-		const { body } = await request(app).get("/api/brews").expect(200);
-		const { brews } = body;
-		expect(brews).toHaveLength(5);
-		brews.forEach((brew: Brew) => {
-			expect(brew).toEqual(
-				expect.objectContaining({
-					id: expect.any(Number),
-					maker_id: expect.any(Number),
-					brew_name: expect.any(String),
-					date_started: expect.any(String),
-				})
-			);
-			expect(brew).toHaveProperty("start_hydro_reading");
-			expect(brew).toHaveProperty("current_percentage");
-			expect(brew).toHaveProperty("recipe_id");
-			expect(brew).toHaveProperty("yeast_used");
-			expect(brew).toHaveProperty("volume_in_gals");
-			expect(brew).toHaveProperty("date_finished");
-			expect(brew).toHaveProperty("finished");
-		});
-	});
+    test("GET 200: /api/brews - responds with an array of all brews", async () => {
+        const { body } = await request(app).get("/api/brews").expect(200);
+        const { brews } = body;
+        expect(brews).toHaveLength(5);
+        brews.forEach((brew: Brew) => {
+            expect(brew).toEqual(
+                expect.objectContaining({
+                    id: expect.any(Number),
+                    maker_id: expect.any(Number),
+                    brew_name: expect.any(String),
+                    date_started: expect.any(String),
+                })
+            );
+            expect(brew).toHaveProperty("start_hydro_reading");
+            expect(brew).toHaveProperty("current_percentage");
+            expect(brew).toHaveProperty("recipe_id");
+            expect(brew).toHaveProperty("yeast_used");
+            expect(brew).toHaveProperty("volume_in_gals");
+            expect(brew).toHaveProperty("date_finished");
+            expect(brew).toHaveProperty("finished");
+        });
+    });
 });
 
 describe("/api/brews/:brew_id", () => {
-	describe("GET /api/brews/:brew_id", () => {
-		test("GET 200: /api/brews/:brew_id - responds with an object containing the corresponding brew", async () => {
-			const { body } = await request(app).get("/api/brews/2").expect(200);
-			expect(body.brew).toMatchObject({
-				id: 2,
-				maker_id: 1,
-				brew_name: "Strawberry wine",
-				date_started: "2024-03-05T21:03:28.822Z",
-				start_hydro_reading: "1.122",
-				current_percentage: "14.9",
-				recipe_id: 2,
-				yeast_used: "Lalvin e118",
-				volume_in_gals: 2,
-				finished: false,
-			});
-		});
-		test("GET 400: /abi/brew/:brew_id - responds with a 400 error when given an invalid id", async () => {
-			const { body } = await request(app).get("/api/brews/garbage").expect(400);
-			expect(body.msg).toBe("Bad request");
-		});
-		test("GET 404: /abi/brew/:brew_id - responds with a 404 error when given a non-existent", async () => {
-			const { body } = await request(app).get("/api/brews/2000").expect(404);
-			expect(body.msg).toBe("Not found");
-		});
-	});
-	describe("PATCH /api/brews/:brew_id", () => {
-		test("PATCH 200 /api/brews/:brew_id - responds with updated brew object", async () => {
-			const payload = {
-				recipe_id: 4,
-				yeast_used: "Lalvin e118",
-			};
-			const { body } = await request(app)
-				.patch("/api/brews/5")
-				.send(payload)
-				.expect(200);
-			expect(body["brew"]).toMatchObject({
-				id: 5,
-				maker_id: 2,
-				brew_name: "Lavender",
-				date_started: "2024-06-10T21:03:28.822Z",
-				start_hydro_reading: null,
-				current_percentage: "0.0",
-				recipe_id: 4,
-				yeast_used: "Lalvin e118",
-				volume_in_gals: null,
-				date_finished: null,
-				finished: false,
-			});
-		});
-		test("PATCH 400 /api/brews/:brew_id - invalid request format", async () => {
-			const { body } = await request(app)
-				.patch("/api/brews/5")
-				.send({
-					garbage: true,
-				})
-				.expect(400);
-			expect(body.msg).toBe("Bad request");
-		});
-		test("PATCH 400 /api/brews/:brew_id - invalid datatypes", async () => {
-			const { body } = await request(app)
-				.patch("/api/brews/5")
-				.send({
-					finished: "yes it has",
-				})
-				.expect(400);
-			expect(body.msg).toBe("Bad request");
-		});
-		test("PATCH 404 /api/brews/:brew_id - non existent brew id", async () => {
-			const { body } = await request(app)
-				.patch("/api/brews/3000")
-				.send({
-					recipe_id: 4,
-					yeast_used: "Lalvin e118",
-				})
-				.expect(404);
-			expect(body.msg).toBe("Not found");
-		});
-		test("PATCH 400 /api/brews/:brew_id - invalid brew id", async () => {
-			const { body } = await request(app)
-				.patch("/api/brews/garbage")
-				.send({
-					recipe_id: 4,
-					yeast_used: "Lalvin e118",
-				})
-				.expect(400);
-			expect(body.msg).toBe("Bad request");
-		});
-	});
-	describe("DELETE /api/brews/:brew_id", () => {
-		test("DELETE 204 /api/brews/:brew_id - responds with only the status code when successfully deleted", async () => {
-			const brewBodyBefore: any = await request(app).get("/api/brews");
-			expect(brewBodyBefore["body"]["brews"]).toHaveLength(5);
+    describe("GET /api/brews/:brew_id", () => {
+        test("GET 200: /api/brews/:brew_id - responds with an object containing the corresponding brew", async () => {
+            const { body } = await request(app).get("/api/brews/2").expect(200);
+            expect(body.brew).toMatchObject({
+                id: 2,
+                maker_id: 1,
+                brew_name: "Strawberry wine",
+                date_started: "2024-03-05T21:03:28.822Z",
+                start_hydro_reading: "1.122",
+                current_percentage: "14.9",
+                recipe_id: 2,
+                yeast_used: "Lalvin e118",
+                volume_in_gals: 2,
+                finished: false,
+            });
+        });
+        test("GET 400: /abi/brew/:brew_id - responds with a 400 error when given an invalid id", async () => {
+            const { body } = await request(app)
+                .get("/api/brews/garbage")
+                .expect(400);
+            expect(body.msg).toBe("Bad request");
+        });
+        test("GET 404: /abi/brew/:brew_id - responds with a 404 error when given a non-existent", async () => {
+            const { body } = await request(app)
+                .get("/api/brews/2000")
+                .expect(404);
+            expect(body.msg).toBe("Not found");
+        });
+    });
+    describe("PATCH /api/brews/:brew_id", () => {
+        test("PATCH 200 /api/brews/:brew_id - responds with updated brew object", async () => {
+            const payload = {
+                recipe_id: 4,
+                yeast_used: "Lalvin e118",
+            };
+            const { body } = await request(app)
+                .patch("/api/brews/5")
+                .send(payload)
+                .expect(200);
+            expect(body["brew"]).toMatchObject({
+                id: 5,
+                maker_id: 2,
+                brew_name: "Lavender",
+                date_started: "2024-06-10T21:03:28.822Z",
+                start_hydro_reading: null,
+                current_percentage: "0.0",
+                recipe_id: 4,
+                yeast_used: "Lalvin e118",
+                volume_in_gals: null,
+                date_finished: null,
+                finished: false,
+            });
+        });
+        test("PATCH 400 /api/brews/:brew_id - invalid request format", async () => {
+            const { body } = await request(app)
+                .patch("/api/brews/5")
+                .send({
+                    garbage: true,
+                })
+                .expect(400);
+            expect(body.msg).toBe("Bad request");
+        });
+        test("PATCH 400 /api/brews/:brew_id - invalid datatypes", async () => {
+            const { body } = await request(app)
+                .patch("/api/brews/5")
+                .send({
+                    finished: "yes it has",
+                })
+                .expect(400);
+            expect(body.msg).toBe("Bad request");
+        });
+        test("PATCH 404 /api/brews/:brew_id - non existent brew id", async () => {
+            const { body } = await request(app)
+                .patch("/api/brews/3000")
+                .send({
+                    recipe_id: 4,
+                    yeast_used: "Lalvin e118",
+                })
+                .expect(404);
+            expect(body.msg).toBe("Not found");
+        });
+        test("PATCH 400 /api/brews/:brew_id - invalid brew id", async () => {
+            const { body } = await request(app)
+                .patch("/api/brews/garbage")
+                .send({
+                    recipe_id: 4,
+                    yeast_used: "Lalvin e118",
+                })
+                .expect(400);
+            expect(body.msg).toBe("Bad request");
+        });
+    });
+    describe("DELETE /api/brews/:brew_id", () => {
+        test("DELETE 204 /api/brews/:brew_id - responds with only the status code when successfully deleted", async () => {
+            const brewBodyBefore: any = await request(app).get("/api/brews");
+            expect(brewBodyBefore["body"]["brews"]).toHaveLength(5);
 
-			const { body } = await request(app).delete("/api/brews/1").expect(204);
+            const { body } = await request(app)
+                .delete("/api/brews/1")
+                .expect(204);
 
-			const brewBodyAfter: any = await request(app).get("/api/brews");
-			expect(brewBodyAfter["body"]["brews"]).toHaveLength(4);
-		});
-		test("DELETE 404 /api/brews/:brew_id - if the given id doesn't exist", async () => {
-			const { body } = await request(app).delete("/api/brews/5000").expect(404);
-			expect(body.msg).toBe("Not found");
-		});
-		test("DELETE 400 /api/brews/:brew_id - if given i d is invalid", async () => {
-			const { body } = await request(app).delete("/api/brews/garbage").expect(400);
-			expect(body.msg).toBe("Bad request");
-		});
-	});
+            const brewBodyAfter: any = await request(app).get("/api/brews");
+            expect(brewBodyAfter["body"]["brews"]).toHaveLength(4);
+        });
+        test("DELETE 404 /api/brews/:brew_id - if the given id doesn't exist", async () => {
+            const { body } = await request(app)
+                .delete("/api/brews/5000")
+                .expect(404);
+            expect(body.msg).toBe("Not found");
+        });
+        test("DELETE 400 /api/brews/:brew_id - if given i d is invalid", async () => {
+            const { body } = await request(app)
+                .delete("/api/brews/garbage")
+                .expect(400);
+            expect(body.msg).toBe("Bad request");
+        });
+    });
 });
 
 describe("/api/recipes", () => {
-	describe("GET /api/recipes", () => {
-		test("GET 200 /api/recipes - responds with an array of all recipes", async () => {
-			const { body } = await request(app).get("/api/recipes").expect(200);
-			const { recipes } = body;
+    describe("GET /api/recipes", () => {
+        test("GET 200 /api/recipes - responds with an array of all recipes", async () => {
+            const { body } = await request(app).get("/api/recipes").expect(200);
+            const { recipes } = body;
 
-			expect(recipes).toHaveLength(4);
-			recipes.map((recipe: Recipe) => {
-				expect(recipe).toMatchObject({
-					id: expect.any(Number),
-					maker_id: expect.any(Number),
-					recipe_name: expect.any(String),
-					date_added: expect.any(String),
-					rating: expect.any(String),
-					hidden: expect.any(Boolean),
-				});
-				expect(recipe).toHaveProperty("link");
-				expect(recipe).toHaveProperty("body");
-				expect(recipe).toHaveProperty("image");
-			});
-		});
-	});
+            expect(recipes).toHaveLength(4);
+            recipes.map((recipe: Recipe) => {
+                expect(recipe).toMatchObject({
+                    id: expect.any(Number),
+                    maker_id: expect.any(Number),
+                    recipe_name: expect.any(String),
+                    date_added: expect.any(String),
+                    hidden: expect.any(Boolean),
+                });
+                expect(recipe).toHaveProperty("link");
+                expect(recipe).toHaveProperty("body");
+                expect(recipe).toHaveProperty("image");
+            });
+        });
+    });
 });
 
 describe("/api/recipes/:recipe_id", () => {
-	describe("GET /api/recipes/:recipe_id", () => {
-		test("GET 200 /api/recipes/:recipes_id - responds with an object relating to the specified id", async () => {
-			const { body } = await request(app).get("/api/recipes/1").expect(200);
-			const { recipe } = body;
-			expect(recipe).toMatchObject({
-				id: 1,
-				maker_id: 1,
-				recipe_name: "Maple Mead",
-				date_added: "2023-06-02T16:03:28.822Z",
-				link: "https://www.growforagecookferment.com/maple-mead/",
-				body: "used 300g more honey",
-				image: "www.test/image",
-				rating: "0.0",
-				hidden: true,
-			});
+    describe("GET /api/recipes/:recipe_id", () => {
+        test("GET 200 /api/recipes/:recipes_id - responds with an object relating to the specified id", async () => {
+            const { body } = await request(app)
+                .get("/api/recipes/1")
+                .expect(200);
+            const { recipe } = body;
+            expect(recipe).toMatchObject({
+                id: 1,
+                maker_id: 1,
+                recipe_name: "Maple Mead",
+                date_added: "2023-06-02T16:03:28.822Z",
+                link: "https://www.growforagecookferment.com/maple-mead/",
+                body: "used 300g more honey",
+                image: "www.test/image",
+                hidden: true,
+            });
+        });
+        test("GET 404 /api/recipes/:recipes_id - non-existant id is given", async () => {
+            const { body } = await request(app)
+                .get("/api/recipes/3000")
+                .expect(404);
+            expect(body["msg"]).toBe("Not found");
+        });
+        test("GET 400 /api/recipes/:recipes_id - invalid id is given", async () => {
+            const { body } = await request(app)
+                .get("/api/recipes/garbage")
+                .expect(400);
+            expect(body["msg"]).toBe("Bad request");
+        });
+    });
+    describe("PATCH /api/recipes/:recipe_id", () => {
+        test("PATCH 200 /api/recipes/:recipe_id - responds with the updated recipe object", async () => {
+            const payload = {
+                link: "www.payloadlink.com/lemon mint and lavander",
+                hidden: true,
+            };
+            const { body } = await request(app)
+                .patch("/api/recipes/4")
+                .send(payload)
+                .expect(200);
+            const { recipe } = body;
+            expect(recipe).toMatchObject({
+                maker_id: 2,
+                recipe_name: "lemon, mint and lavender",
+                date_added: "2023-11-26T21:03:28.822Z",
+                body: "a really detailed recipe on how to make lemon, mint and lavender wine",
+                link: "www.payloadlink.com/lemon mint and lavander",
+                image: "uploaded lemon mint and lavender pic",
+                hidden: true,
+            });
+        });
+        //400 invalid id
+        //404 non existant id
+        test("PATCH 400 /api/recipes/:recipe_id - bad request body format", async () => {
+            const payload = {
+                garbage: true,
+            };
+            const { body } = await request(app)
+                .patch("/api/recipes/3")
+                .send(payload)
+                .expect(400);
+            expect(body["msg"]).toBe("Bad request");
+        });
+        test("PATCH 400 /api/recipes/:recipe_id - bad request body types", async () => {
+            const payload = {
+                link: "www.payloadlink.com/lemon mint and lavander",
+                hidden: "hidden",
+            };
+            const { body } = await request(app)
+                .patch("/api/recipes/3")
+                .send(payload)
+                .expect(400);
+            expect(body["msg"]).toBe("Bad request");
 		});
-		test("GET 404 /api/recipes/:recipes_id - non-existant id is given", async () => {
-			const { body } = await request(app).get("/api/recipes/3000").expect(404);
-			expect(body["msg"]).toBe("Not found");
+		test("PATCH 404 /api/recipes/:recipe_id - non-existant recipe id", async () => {
+            const payload = {
+                link: "www.payloadlink.com/lemon mint and lavander",
+                hidden: true,
+            };
+            const { body } = await request(app)
+                .patch("/api/recipes/3000")
+                .send(payload)
+                .expect(404);
+            expect(body["msg"]).toBe("Not found");
 		});
-		test("GET 400 /api/recipes/:recipes_id - invalid id is given", async () => {
-			const { body } = await request(app).get("/api/recipes/garbage").expect(400);
-			expect(body["msg"]).toBe("Bad request");
-		});
-	});
+		test("PATCH 400 /api/recipes/:recipe_id - invalid recipe id", async () => {
+            const payload = {
+                link: "www.payloadlink.com/lemon mint and lavander",
+                hidden: true,
+            };
+            const { body } = await request(app)
+                .patch("/api/recipes/garbage")
+                .send(payload)
+                .expect(400);
+            expect(body["msg"]).toBe("Bad request");
+        });
+    });
 });

@@ -1,9 +1,10 @@
 import { NextFunction, Request, Response } from "express";
 import { Recipe } from "../interfaces";
 import {
-	fetchRecipes,
-	fetchRecipeById,
-	fetchRecipesByUserId,
+    fetchRecipes,
+    fetchRecipeById,
+    fetchRecipesByUserId,
+    updateRecipeById,
 } from "../models/recipes-model";
 import { insertRecipeByUserId } from "../models/users-model";
 
@@ -27,12 +28,11 @@ export const getRecipeById = async (
 ) => {
 	const { recipe_id } = req.params;
 	try {
-		const recipe: Recipe = await fetchRecipeById(+recipe_id);
-		res.status(200).send({ recipe });
-	} catch (err) {
-		console.log(err);
-		return next(err);
-	}
+        const recipe: Recipe = await fetchRecipeById(+recipe_id);
+        res.status(200).send({ recipe });
+    } catch (err) {
+        return next(err);
+    }
 };
 
 export const getRecipesByUserId = async (
@@ -60,6 +60,22 @@ export const postRecipeByUserId = async (
         const recipe: Recipe = await insertRecipeByUserId(payload);
         res.status(201).send({ recipe });
     } catch (err) {
+        return next(err);
+    }
+};
+
+export const patchRecipeById = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
+    try {
+        const { recipe_id } = req.params;
+        const patchObject: { [index: string]: any } = req.body;
+        const recipe: Recipe = await updateRecipeById(+recipe_id, patchObject);
+        res.status(200).send({ recipe });
+    } catch (err) {
+        console.log(err);
         return next(err);
     }
 };

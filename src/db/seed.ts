@@ -76,21 +76,20 @@ export const seed = async ({
 	await db.query(insertNoteData);
 
 	const insertRecipeData = format(
-		`INSERT INTO recipes (maker_id, recipe_name, date_added, link, body, image, rating, hidden)
+        `INSERT INTO recipes (maker_id, recipe_name, date_added, link, body, image, hidden)
     VALUES
     %L;`,
-		recipeData.map(
-			({
-				maker_id,
-				recipe_name,
-				date_added,
-				link,
-				body,
-				image,
-				rating,
-				hidden,
-			}) => [maker_id, recipe_name, date_added, link, body, image, rating, hidden]
-		)
-	);
+        recipeData.map(
+            ({
+                maker_id,
+                recipe_name,
+                date_added,
+                link,
+                body,
+                image,
+                hidden,
+            }) => [maker_id, recipe_name, date_added, link, body, image, hidden]
+        )
+    );
 	await db.query(insertRecipeData);
 };
