@@ -552,4 +552,24 @@ describe("/api/recipes/:recipe_id", () => {
             expect(body["msg"]).toBe("Bad request");
         });
     });
+	describe("DELETE /api/recipes/:recipe_id", () => {
+        test("DELETE 204 /api/recipes/:recipe_id - responds with status code only", async () => {
+            const { body } = await request(app)
+                .delete("/api/recipes/1")
+                .expect(204);
+            expect(body).toEqual({});
+            const recipesBody: any = await request(app).get("/api/recipes");
+            expect(recipesBody.body.recipes).toHaveLength(3);
+        });
+	});
+	test("DELETE 404 /api/recipes/:Recipe_id - when given a non-existant id", async () => {
+		const { body } = await request(app).delete("/api/recipes/3000").expect(404)
+		expect(body["msg"]).toBe("Not found")
+	})
+	test("DELETE 400 /api/recipes/:Recipe_id - when given an invalid id", async () => {
+        const { body } = await request(app)
+            .delete("/api/recipes/garbage")
+            .expect(400);
+        expect(body["msg"]).toBe("Bad request");
+    });
 });

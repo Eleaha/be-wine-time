@@ -50,3 +50,14 @@ export const updateRecipeById = async (
         ? Promise.reject({ status: 404, msg: "Not found" })
         : rows[0];
 };
+
+export const removeRecipeById = async (recipeId: number) => {
+    const { rows } = await db.query(
+        `
+        DELETE FROM recipes WHERE id = $1 RETURNING *;`,
+        [recipeId]
+    );
+    if (!rows.length) {
+        return Promise.reject({ status: 404, msg: "Not found" });
+    }
+};

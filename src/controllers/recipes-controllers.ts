@@ -5,29 +5,26 @@ import {
     fetchRecipeById,
     fetchRecipesByUserId,
     updateRecipeById,
+    removeRecipeById,
 } from "../models/recipes-model";
 import { insertRecipeByUserId } from "../models/users-model";
 
-export const getRecipes = async (
-	req: Request,
-	res: Response,
-	next: NextFunction
-) => {
-	try {
-		const recipes: Recipe[] = await fetchRecipes();
-		res.status(200).send({ recipes });
-	} catch (err) {
-		return next(err);
-	}
+export const getRecipes = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const recipes: Recipe[] = await fetchRecipes();
+        res.status(200).send({ recipes });
+    } catch (err) {
+        return next(err);
+    }
 };
 
 export const getRecipeById = async (
-	req: Request,
-	res: Response,
-	next: NextFunction
+    req: Request,
+    res: Response,
+    next: NextFunction
 ) => {
-	const { recipe_id } = req.params;
-	try {
+    const { recipe_id } = req.params;
+    try {
         const recipe: Recipe = await fetchRecipeById(+recipe_id);
         res.status(200).send({ recipe });
     } catch (err) {
@@ -36,17 +33,17 @@ export const getRecipeById = async (
 };
 
 export const getRecipesByUserId = async (
-	req: Request,
-	res: Response,
-	next: NextFunction
+    req: Request,
+    res: Response,
+    next: NextFunction
 ) => {
-	const { user_id } = req.params;
-	try {
-		const recipes: Recipe[] = await fetchRecipesByUserId(+user_id);
-		res.status(200).send({ recipes });
-	} catch (err) {
-		return next(err);
-	}
+    const { user_id } = req.params;
+    try {
+        const recipes: Recipe[] = await fetchRecipesByUserId(+user_id);
+        res.status(200).send({ recipes });
+    } catch (err) {
+        return next(err);
+    }
 };
 
 export const postRecipeByUserId = async (
@@ -75,7 +72,20 @@ export const patchRecipeById = async (
         const recipe: Recipe = await updateRecipeById(+recipe_id, patchObject);
         res.status(200).send({ recipe });
     } catch (err) {
-        console.log(err);
+        return next(err);
+    }
+};
+
+export const deleteRecipeById = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
+    const { recipe_id } = req.params;
+    try {
+        await removeRecipeById(+recipe_id);
+        res.status(204).send();
+    } catch (err) {
         return next(err);
     }
 };
