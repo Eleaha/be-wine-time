@@ -7,31 +7,31 @@ export interface Data {
 }
 
 export interface Brew {
-	id?: number;
-	maker_id?: number;
-	brew_name: string;
-	date_started: string;
-	start_hydro_reading?: number;
-	current_percentage?: number;
-	yeast_used?: string;
-	recipe_id?: number;
-	volume_in_gals?: number;
-	date_finished?: string;
-	finished?: boolean;
+    id?: number;
+    maker_id?: number;
+    brew_name: string;
+    date_started: string;
+    start_hydro_reading?: number | null;
+    current_percentage?: number | null;
+    yeast_used?: string | null;
+    recipe_id?: number | null;
+    volume_in_gals?: number | null;
+    date_finished?: string | null;
+    finished?: boolean | null;
 }
 
 export interface NoteTypes {
-	type: string;
+    type: string;
 }
 
 export interface Note {
-	id?: number;
-	maker_id: number;
-	brew_id: number;
-	date_added: string;
-	type: string;
-	note_title: string;
-	body?: any;
+    id?: number;
+    maker_id: number;
+    brew_id: number;
+    date_added: string;
+    type: string;
+    note_title: string;
+    body?: any | null;
 }
 
 export interface Recipe {

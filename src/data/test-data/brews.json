@@ -20,19 +20,21 @@
 		"recipe_id": 2,
 		"yeast_used": "Lalvin e118",
 		"volume_in_gals": 2,
+		"date_finished": null,
 		"finished": false
 	},
 	{
-		"maker_id": 2,
-		"brew_name": "Cherry Wine",
-		"date_started": "2023-09-15T21:03:28.822Z",
-		"start_hydro_reading": 1.104,
-		"current_percentage": 13,
-		"recipe_id": 2,
-		"yeast_used": "Mangrove Jack C327",
-		"volume_in_gals": 2,
-		"finished": false
-	},
+        "maker_id": 2,
+        "brew_name": "Cherry Wine",
+        "date_started": "2023-09-15T21:03:28.822Z",
+        "start_hydro_reading": 1.104,
+        "current_percentage": 13,
+        "recipe_id": 2,
+        "yeast_used": "Mangrove Jack C327",
+        "volume_in_gals": 2,
+        "date_finished": null,
+        "finished": false
+    },
 	{
 		"maker_id": 2,
 		"brew_name": "Lemon Mint and Lavender",
@@ -49,7 +51,12 @@
 		"maker_id": 2,
 		"brew_name": "Lavender",
 		"date_started": "2024-06-10T21:03:28.822Z",
+		"start_hydro_reading": null,
 		"current_percentage": 0,
+		"recipe_id": null,
+		"yeast_used": null,
+		"volume_in_gals": null,
+		"date_finished": null,
 		"finished": false
 	}
 ]
