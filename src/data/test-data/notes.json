@@ -8,12 +8,13 @@
 		"body": "didn't hydrate first"
 	},
 	{
-		"maker_id": 1,
-		"brew_id": 1,
-		"date_added": "2023-01-09T21:03:28.822Z",
-		"type": "moved-to-secondary",
-		"note_title": "moved-to-secondary"
-	},
+        "maker_id": 1,
+        "brew_id": 1,
+        "date_added": "2023-01-09T21:03:28.822Z",
+        "type": "moved-to-secondary",
+        "note_title": "moved-to-secondary",
+        "body": null
+    },
 	{
 		"maker_id": 1,
 		"brew_id": 1,
