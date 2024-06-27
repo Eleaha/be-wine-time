@@ -6,6 +6,7 @@ import { brewsRouter } from "./src/routes/brews-router";
 import { handleErrors } from "./error-handling";
 import { usersRouter } from "./src/routes/users-router";
 import { recipesRouter } from "./src/routes/recipes-router";
+import { noteTypesRouter } from "./src/routes/note-types-router";
 
 dotenv.config();
 
@@ -19,6 +20,7 @@ app.use("/api", apiRouter);
 app.use("/api/brews", brewsRouter);
 app.use("/api/users", usersRouter);
 app.use("/api/recipes", recipesRouter)
+app.use("/api/note-types", noteTypesRouter);
 
 app.all("*", (req: Request, res: Response, next: NextFunction) => {
 	res.status(404).send({ msg: "Not found" });
