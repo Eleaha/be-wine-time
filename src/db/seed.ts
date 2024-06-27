@@ -62,12 +62,13 @@ export const seed = async ({
 	await db.query(insertNoteTypeData);
 
 	const insertNoteData = format(
-		`INSERT INTO notes (maker_id, brew_id, type, note_title, body)
+		`INSERT INTO notes (maker_id, brew_id, date_added, type, note_title, body)
     VALUES
     %L;`,
-		noteData.map(({ maker_id, brew_id, type, note_title, body }) => [
+		noteData.map(({ maker_id, brew_id, date_added, type, note_title, body }) => [
 			maker_id,
 			brew_id,
+			date_added,
 			type,
 			note_title,
 			body,
