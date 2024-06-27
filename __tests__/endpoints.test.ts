@@ -573,3 +573,16 @@ describe("/api/recipes/:recipe_id", () => {
         expect(body["msg"]).toBe("Bad request");
     });
 });
+
+describe("/api/note-types", () => {
+    test("GET /api/note-types - responds with an array of note types", async() => {
+        const { body } = await request(app).get("/api/note-types").expect(200)
+        const { noteTypes } = body
+        expect(noteTypes).toHaveLength(8)
+        noteTypes.forEach((noteType: { type: string }) => {
+            expect(noteType).toMatchObject({
+                type: expect.any(String)
+            })
+        })
+    })
+})

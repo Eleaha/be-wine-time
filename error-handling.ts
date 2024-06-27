@@ -20,4 +20,6 @@ export const handleErrors = (
 	if (notFoundCodes.includes(err["code"])) {
         res.status(404).send({ msg: "Not found" });
     }
+	
+	return next(err);
 };
