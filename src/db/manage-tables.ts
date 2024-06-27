@@ -35,6 +35,7 @@ export const createTables = async () => {
         id SERIAL PRIMARY KEY,
         maker_id INT NOT NULL REFERENCES users(id),
         brew_id INT NOT NULL REFERENCES brews(id) ON DELETE CASCADE,
+        date_added VARCHAR DEFAULT NOW(),
         type VARCHAR NOT NULL REFERENCES note_types(type),
         note_title VARCHAR NOT NULL,
         body TEXT

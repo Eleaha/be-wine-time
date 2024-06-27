@@ -586,3 +586,33 @@ describe("/api/note-types", () => {
         })
     })
 })
+
+describe("/api/notes/:note_id", () => {
+    describe("GET /api/notes/:note_id", () => {
+        test("GET /api/note/:note_id", async () => {
+            const { body } = await request(app).get("/api/notes/1").expect(200);
+            const { note } = body;
+            expect(note).toEqual({
+                id: 1,
+                maker_id: 1,
+                brew_id: 1,
+                date_added: "2023-01-03T21:03:28.822Z",
+                type: "yeast-added",
+                note_title: "Lalvin K1113 added",
+                body: "didn't hydrate first",
+            });
+        });
+        test("GET 404 /api/notes/:note_id - when given a non-existant note id", async () => {
+            const { body } = await request(app)
+                .get("/api/notes/3000")
+                .expect(404);
+            expect(body["msg"]).toBe("Not found");
+        });
+        test("GET 400 /api/notes/:note_id - when given an invalid note id", async () => {
+            const { body } = await request(app)
+                .get("/api/notes/garbage")
+                .expect(400);
+            expect(body["msg"]).toBe("Bad request");
+        });
+    });
+});
