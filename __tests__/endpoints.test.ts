@@ -502,10 +502,6 @@ describe("/api/brews/:brew_id/notes", () => {
                 body: "test body",
             });
         });
-        //invalid body format
-        //invalid types
-        //non existant id
-        //invalid id
         test("POST 400 /api/brews/:brew_id/notes - when given a bad body format", async () => {
             const payload = {
                 maker_id: 1,

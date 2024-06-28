@@ -1,20 +1,28 @@
 import { Request, Response, NextFunction } from "express";
-import {
-	fetchBrewById,
-	fetchBrews,
-	fetchBrewsByUserId,
-	removeBrewById,
-	updateBrewById,
-} from "../models/brews-model";
 import { Brew } from "../interfaces";
-import { insertBrewByUserId } from "../models/users-model";
+import {
+    fetchBrewById,
+    fetchBrews,
+    fetchBrewsByUserId,
+    removeBrewById,
+    updateBrewById,
+    insertBrew,
+} from "../models/brews-model";
 
-export const getBrews = async (req: Request, res: Response, next: NextFunction) => {
+export const getBrews = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
     const brews: Brew[] = await fetchBrews();
     return res.status(200).send({ brews });
 };
 
-export const getBrewById = async (req: Request, res: Response, next: NextFunction) => {
+export const getBrewById = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
     const { brew_id } = req.params;
     try {
         const brew: Brew = await fetchBrewById(+brew_id);
@@ -38,7 +46,7 @@ export const getBrewsByUserId = async (
     }
 };
 
-export const postBrewByUserId = async (
+export const postBrew = async (
     req: Request,
     res: Response,
     next: NextFunction
@@ -46,7 +54,7 @@ export const postBrewByUserId = async (
     try {
         const { user_id } = req.params;
         const newBrew: Brew = { maker_id: user_id, ...req.body };
-        const brew: Brew = await insertBrewByUserId(newBrew);
+        const brew: Brew = await insertBrew(newBrew);
         res.status(201).send({ brew });
     } catch (err) {
         return next(err);

@@ -1,7 +1,6 @@
 import format from "pg-format";
 import { db } from "../db/db-connection";
 import { Brew, Note } from "../interfaces";
-import { formatSQLColumnString as formatPatchString } from "../utils";
 import { fetchBrewById } from "./brews-model";
 
 export const fetchNoteById = async (noteId: number) => {

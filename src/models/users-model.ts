@@ -1,6 +1,6 @@
-import { db } from "../db/db-connection";
-import { Brew, Recipe } from "../interfaces";
 import format from "pg-format";
+import { Brew, Recipe } from "../interfaces";
+import { db } from "../db/db-connection";
 
 export const fetchUsers = async () => {
     const { rows } = await db.query(`SELECT * FROM users`);
@@ -31,35 +31,3 @@ export const fetchUserById = async (userId: number) => {
 
     return rows[0];
 };
-
-export const insertBrewByUserId = async (payload: Brew) => {
-    const cols: string[] = Object.keys(payload);
-    const values: any[] = Object.values(payload);
-
-    const colString = cols.join(", ");
-    const queryString: string = format(
-        `
-		INSERT INTO brews (${colString})
-		VALUES %L
-		RETURNING *`,
-        [values]
-    );
-	const { rows } = await db.query(queryString);
-    return rows[0];
-};
-
-export const insertRecipeByUserId = async (payload: Recipe) => {
-    const cols: string[] = Object.keys(payload)
-    const values: any[] = Object.values(payload)
-
-    const colString = cols.join(", ")
-    const queryString: string = format(
-        `
-        INSERT INTO recipes (${colString})
-        VALUES %L
-        RETURNING *`,
-        [values]
-    )
-    const { rows } = await db.query(queryString)
-    return rows[0]
-}

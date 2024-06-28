@@ -1,11 +1,11 @@
+import format from "pg-format";
 import { db } from "../db/db-connection";
-import { User } from "../interfaces";
+import { User, Recipe } from "../interfaces";
 import { formatSQLColumnString } from "../utils";
 import { fetchUserById } from "./users-model";
 
 export const fetchRecipes = async () => {
-    const { rows } = await db.query(`
-        SELECT * FROM recipes`);
+    const { rows } = await db.query(`SELECT * FROM recipes`);
     return rows;
 };
 
@@ -13,7 +13,8 @@ export const fetchRecipeById = async (recipeId: number) => {
     const { rows } = await db.query(
         `
         SELECT * FROM recipes
-        WHERE id = $1`,
+        WHERE id = $1
+        `,
         [recipeId]
     );
 
@@ -26,7 +27,8 @@ export const fetchRecipesByUserId = async (userId: number) => {
     const { rows } = await db.query(
         `
 	SELECT * FROM recipes
-	WHERE maker_id = $1`,
+	WHERE maker_id = $1
+    `,
         [userId]
     );
     if (!rows.length) {
@@ -36,6 +38,23 @@ export const fetchRecipesByUserId = async (userId: number) => {
             : Promise.reject({ status: 404, msg: "Not Found" });
     }
     return rows;
+};
+
+export const insertRecipe = async (payload: Recipe) => {
+    const cols: string[] = Object.keys(payload);
+    const values: any[] = Object.values(payload);
+
+    const colString = cols.join(", ");
+    const queryString: string = format(
+        `
+        INSERT INTO recipes (${colString})
+        VALUES %L
+        RETURNING *
+        `,
+        [values]
+    );
+    const { rows } = await db.query(queryString);
+    return rows[0];
 };
 
 export const updateRecipeById = async (
@@ -54,7 +73,8 @@ export const updateRecipeById = async (
 export const removeRecipeById = async (recipeId: number) => {
     const { rows } = await db.query(
         `
-        DELETE FROM recipes WHERE id = $1 RETURNING *;`,
+        DELETE FROM recipes WHERE id = $1 RETURNING *;
+        `,
         [recipeId]
     );
     if (!rows.length) {

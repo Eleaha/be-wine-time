@@ -4,12 +4,16 @@ import {
     fetchRecipes,
     fetchRecipeById,
     fetchRecipesByUserId,
+    insertRecipe,
     updateRecipeById,
     removeRecipeById,
 } from "../models/recipes-model";
-import { insertRecipeByUserId } from "../models/users-model";
 
-export const getRecipes = async (req: Request, res: Response, next: NextFunction) => {
+export const getRecipes = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
     try {
         const recipes: Recipe[] = await fetchRecipes();
         res.status(200).send({ recipes });
@@ -46,7 +50,7 @@ export const getRecipesByUserId = async (
     }
 };
 
-export const postRecipeByUserId = async (
+export const postRecipe = async (
     req: Request,
     res: Response,
     next: NextFunction
@@ -54,7 +58,7 @@ export const postRecipeByUserId = async (
     try {
         const { user_id } = req.params;
         const payload: Recipe = { maker_id: user_id, ...req.body };
-        const recipe: Recipe = await insertRecipeByUserId(payload);
+        const recipe: Recipe = await insertRecipe(payload);
         res.status(201).send({ recipe });
     } catch (err) {
         return next(err);
