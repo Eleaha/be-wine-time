@@ -1,6 +1,6 @@
 import { db } from "../db/db-connection";
 import { User } from "../interfaces";
-import { formatPatchString } from "../utils";
+import { formatSQLColumnString } from "../utils";
 import { fetchUserById } from "./users-model";
 
 export const fetchRecipes = async () => {
@@ -42,7 +42,7 @@ export const updateRecipeById = async (
     recipeId: number,
     updateObj: { [index: string]: any }
 ) => {
-    const setString: string = formatPatchString(updateObj);
+    const setString: string = formatSQLColumnString(updateObj);
     const queryString = `UPDATE recipes SET ${setString} WHERE id = $1 RETURNING *;`;
 
     const { rows } = await db.query(queryString, [recipeId]);

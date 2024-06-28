@@ -1,5 +1,7 @@
+import format from "pg-format";
 import { db } from "../db/db-connection";
-import { Brew } from "../interfaces";
+import { Brew, Note } from "../interfaces";
+import { formatSQLColumnString as formatPatchString } from "../utils";
 import { fetchBrewById } from "./brews-model";
 
 export const fetchNoteById = async (noteId: number) => {
@@ -28,3 +30,20 @@ export const fetchNotesByBrewId = async (brewId: number) => {
     }
     return rows;
 };
+
+export const insertNote = async (payload: Note) => {
+    const cols: string[] = Object.keys(payload);
+    const values: any[] = Object.values(payload);
+
+    const colString = cols.join(", ");
+    const queryString: string = format(
+        `
+		INSERT INTO notes (${colString})
+		VALUES %L
+		RETURNING *`,
+        [values]
+    );
+    const { rows } = await db.query(queryString);
+    return rows[0];
+
+}
