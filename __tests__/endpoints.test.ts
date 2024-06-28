@@ -5,6 +5,7 @@ import { data } from "../src/data/test-data/data-index";
 import { db } from "../src/db/db-connection";
 import { Brew, Note, Recipe, User } from "../src/interfaces";
 import endpoints from "../endpoints.json";
+import { text } from "stream/consumers";
 
 afterAll(() => db.end());
 
@@ -476,6 +477,86 @@ describe("/api/brews/:brew_id/notes", () => {
                 .get("/api/brews/4/notes")
                 .expect(404);
             expect(body["msg"]).toBe("No notes yet!");
+        });
+    });
+    describe("POST /api/brews/:brew_id/notes", () => {
+        test("POST 201 /api/brews/:brew_id/notes - responds with the newly created note", async () => {
+            const payload = {
+                maker_id: 1,
+                type: "text",
+                note_title: "test",
+                body: "test body",
+            };
+            const { body } = await request(app)
+                .post("/api/brews/1/notes")
+                .send(payload)
+                .expect(201);
+            const { note } = body;
+            expect(note).toEqual({
+                id: 8,
+                maker_id: 1,
+                brew_id: 1,
+                date_added: expect.any(String),
+                type: "text",
+                note_title: "test",
+                body: "test body",
+            });
+        });
+        //invalid body format
+        //invalid types
+        //non existant id
+        //invalid id
+        test("POST 400 /api/brews/:brew_id/notes - when given a bad body format", async () => {
+            const payload = {
+                maker_id: 1,
+                type: "text",
+                garbage: "test",
+                body: "test body",
+            };
+            const { body } = await request(app)
+                .post("/api/brews/1/notes")
+                .send(payload)
+                .expect(400);
+            expect(body["msg"]).toBe("Bad request");
+        });
+        test("POST 400 /api/brews/:brew_id/notes - when given an invalid data type", async () => {
+            const payload = {
+                maker_id: "one",
+                type: "text",
+                note_title: "test",
+                body: "test body",
+            };
+            const { body } = await request(app)
+                .post("/api/brews/1/notes")
+                .send(payload)
+                .expect(400);
+            expect(body["msg"]).toBe("Bad request");
+        });
+        test("POST 404 /api/brews/:brew_id/notes - when given a non-existant id", async () => {
+            const payload = {
+                maker_id: 1,
+                type: "text",
+                note_title: "test",
+                body: "test body",
+            };
+            const { body } = await request(app)
+                .post("/api/brews/3000/notes")
+                .send(payload)
+                .expect(404);
+            expect(body["msg"]).toBe("Not found");
+        });
+        test("POST 404 /api/brews/:brew_id/notes - when given a non-existant id", async () => {
+            const payload = {
+                maker_id: 1,
+                type: "text",
+                note_title: "test",
+                body: "test body",
+            };
+            const { body } = await request(app)
+                .post("/api/brews/garbage/notes")
+                .send(payload)
+                .expect(400);
+            expect(body["msg"]).toBe("Bad request");
         });
     });
 });
