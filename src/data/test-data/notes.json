@@ -8,13 +8,13 @@
 		"body": "didn't hydrate first"
 	},
 	{
-        "maker_id": 1,
-        "brew_id": 1,
-        "date_added": "2023-01-09T21:03:28.822Z",
-        "type": "moved-to-secondary",
-        "note_title": "moved-to-secondary",
-        "body": null
-    },
+		"maker_id": 1,
+		"brew_id": 1,
+		"date_added": "2023-01-09T21:03:28.822Z",
+		"type": "moved-to-secondary",
+		"note_title": "moved-to-secondary",
+		"body": null
+	},
 	{
 		"maker_id": 1,
 		"brew_id": 1,
@@ -37,7 +37,7 @@
 		"date_added": "2023-06-02T21:03:28.822Z",
 		"type": "tasting-note",
 		"note_title": "tasting-note",
-		"body": 0.998
+		"body": "nearly ready!"
 	},
 	{
 		"maker_id": 1,
@@ -55,5 +55,4 @@
 		"note_title": "Bottled 26 bottles",
 		"body": "left a gallon and added nutrient to see what would happen"
 	}
-
 ]
