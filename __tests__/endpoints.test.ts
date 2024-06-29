@@ -768,4 +768,18 @@ describe("/api/notes/:note_id", () => {
 			expect(body["msg"]).toBe("Bad request");
 		});
 	});
+	describe("DELETE /api/notes/:note_id", () => {
+		test("DELETE 204 /api/notes/:note_id - deletes the given note returning status code only", async () => {
+			await request(app).delete("/api/notes/1").expect(204);
+			const notesBody: any = await request(app).get("/api/notes/1").expect(404);
+		});
+		test("DELETE 404 /api/notes/:note_id - when given a non-existant id", async () => {
+			const { body } = await request(app).delete("/api/notes/3000").expect(404);
+			expect(body["msg"]).toBe("Not found");
+		});
+		test("DELETE 400 /api/notes/:note_id - when given an invalid id", async () => {
+			const { body } = await request(app).delete("/api/notes/garbage").expect(400);
+			expect(body["msg"]).toBe("Bad request");
+		});
+	});
 });

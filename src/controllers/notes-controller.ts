@@ -4,6 +4,7 @@ import {
 	fetchNoteById,
 	fetchNotesByBrewId,
 	insertNote,
+	removeNoteById,
 	updateNoteById,
 } from "../models/notes-model";
 
@@ -60,6 +61,20 @@ export const patchNoteById = async (
 	try {
 		const note: Note = await updateNoteById(+note_id, patchObject);
 		res.status(200).send({ note });
+	} catch (err) {
+		return next(err);
+	}
+};
+
+export const deleteNoteById = async (
+	req: Request,
+	res: Response,
+	next: NextFunction
+) => {
+	const { note_id } = req.params;
+	try {
+		await removeNoteById(+note_id);
+		res.status(204).send();
 	} catch (err) {
 		return next(err);
 	}

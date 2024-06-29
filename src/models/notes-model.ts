@@ -59,3 +59,13 @@ export const updateNoteById = async (
 		? Promise.reject({ status: 404, msg: "Not found" })
 		: rows[0];
 };
+
+export const removeNoteById = async (noteId: number) => {
+	const { rows } = await db.query(
+		`DELETE FROM notes WHERE id = $1 RETURNING *;`,
+		[noteId]
+	);
+	if (!rows.length) {
+		return Promise.reject({ status: 404, msg: "Not found" });
+	}
+};
