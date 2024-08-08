@@ -118,5 +118,130 @@
 	},
 	"DELETE /api/brews/:brew_id": {
 		"description": "deletes the brew with the associates id, as well as any associated notes, responding with status code only"
+	},
+	"GET /api/recipes": {
+		"description": "serves an array of all recipes",
+		"example response": [
+			{
+				"maker_id": 2,
+				"recipe_name": "strawberry wine",
+				"date_added": "2023-06-02T21:03:28.822Z",
+				"body": null,
+				"link": "www.strawberry-wine.com",
+				"image": "www.strawberry-wine/image.com",
+				"hidden": true
+			}
+		]
+	},
+	"GET /api/recipes/:recipe_id": {
+		"description": "serves the recipe with the specified id",
+		"example response": {
+			"maker_id": 2,
+			"recipe_name": "strawberry wine",
+			"date_added": "2023-06-02T21:03:28.822Z",
+			"body": null,
+			"link": "www.strawberry-wine.com",
+			"image": "www.strawberry-wine/image.com",
+			"hidden": true
+		}
+	},
+	"GET /api/users/:user_id/recipes": {
+		"description": "serves an array of all recipes associated with a user",
+		"example response": [
+			{
+				"maker_id": 2,
+				"recipe_name": "strawberry wine",
+				"date_added": "2023-06-02T21:03:28.822Z",
+				"body": null,
+				"link": "www.strawberry-wine.com",
+				"image": "www.strawberry-wine/image.com",
+				"hidden": true
+			}
+		]
+	},
+	"POST /api/users/:user_id/recipes": {
+		"description": "adds a recipe associated with the specified user and serves the newly added recipe",
+		"example payload": {
+			"recipe_name": "strawberry wine",
+			"body": "recipe body",
+			"link": "www.strawberry-wine.com",
+			"image": "www.strawberry-wine/image.com",
+			"hidden": true
+		},
+		"example response": {
+			"maker_id": 2,
+			"recipe_name": "strawberry wine",
+			"date_added": "2023-06-02T21:03:28.822Z",
+			"body": "recipe body",
+			"link": "www.strawberry-wine.com",
+			"image": "www.strawberry-wine/image.com",
+			"hidden": true
+		}
+	},
+	"PATCH /api/recipes/:recipe_id": {
+		"description": "updates an existing recipe, serving the updated recipe",
+		"example payload": {
+			"body": "updated recipe body"
+		},
+		"example response": {
+			"maker_id": 2,
+			"recipe_name": "strawberry wine",
+			"date_added": "2023-06-02T21:03:28.822Z",
+			"body": "updated recipe body",
+			"link": "www.strawberry-wine.com",
+			"image": "www.strawberry-wine/image.com",
+			"hidden": true
+		}
+	},
+	"DELETE /api/recipes/:recipe_id": {
+		"description": "deletes the specified recipe"
+	},
+	"GET /api/note-types": {
+		"description": " serves an array of available note types",
+		"example response": [{ "type": "text" }, { "type": "bottled" }]
+	},
+	"GET /api/notes/:note_id": {
+		"description": "serves the note with the associated id",
+		"example response": {
+			"maker_id": 1,
+			"brew_id": 1,
+			"date_added": "2023-01-03T21:03:28.822Z",
+			"type": "yeast-added",
+			"note_title": "Lalvin K1113 added",
+			"body": "didn't hydrate first"
+		}
+	},
+	"POST /api/brew/:brew_id/notes": {
+		"description": "adds a note to the brew with the corresponding id, and serves the new note",
+		"example payload": {
+			"type": "yeast-added",
+			"note_title": "Lalvin K1113 added",
+			"body": "didn't hydrate first"
+		},
+		"example response": {
+			"maker_id": 1,
+			"brew_id": 1,
+			"date_added": "2023-01-03T21:03:28.822Z",
+			"type": "yeast-added",
+			"note_title": "Lalvin K1113 added",
+			"body": "didn't hydrate first"
+		}
+	},
+	"PATCH /api/notes/:note_id": {
+		"description": "updated a note with the corresponding id",
+		"example payload": {
+			"body": "didn't hydrate first - working fine"
+		},
+		"example response": {
+			"maker_id": 1,
+			"brew_id": 1,
+			"date_added": "2023-01-03T21:03:28.822Z",
+			"type": "yeast-added",
+			"note_title": "Lalvin K1113 added",
+			"body": "didn't hydrate first- working fine"
+		}
+	},
+	"DELETE /api/notes/:note_id": {
+		"description": "deletes the note with the associated id"
 	}
 }
