@@ -1,26 +1,38 @@
 [
 	{
-		"type": "text"
+		"type": "text",
+		"description": "A flexible option for recording anything you want"
 	},
 	{
-		"type": "hydro-reading"
+		"type": "hydro-reading",
+		"description": "used to record when a hydrometer reading is taken"
 	},
 	{
-		"type": "yeast-added"
+		"type": "yeast-added",
+		"description": "used to record when and what type of yeast has been added"
 	},
 	{
-		"type": "ingredient-added"
+		"type": "ingredient-added",
+		"description": "used to record when and what ingredients/ingredient and how much of an ingredient have been added"
 	},
 	{
-		"type": "moved-to-secondary"
+		"type": "moved-to-secondary",
+		"description": "used to record when a brew has been moved to secondary fermentation"
 	},
 	{
-		"type": "moved-to-clean-demijohn"
+		"type": "moved-to-clean-secondary",
+		"description": "used to record when a brew has been moved to a clean secondary fermentation vessel"
 	},
 	{
-		"type": "tasting-note"
+		"type": "tasting-note",
+		"description": "used to record how a brew tastes and when"
 	},
-	{ 
-		"type": "bottled" 
+	{
+		"type": "bottled",
+		"description": "used to record when and how many bottles were racked off"
+	},
+	{
+		"type": "winerack",
+		"description": "used for wines in a winerack"
 	}
 ]

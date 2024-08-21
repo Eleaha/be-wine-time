@@ -29,7 +29,8 @@ export const createTables = async () => {
         finished BOOL DEFAULT false
     );`);
 	await db.query(`CREATE TABLE note_types (
-        type VARCHAR PRIMARY KEY
+        type VARCHAR PRIMARY KEY,
+        description VARCHAR
     )`);
 	await db.query(`CREATE TABLE notes (
         id SERIAL PRIMARY KEY,

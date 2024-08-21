@@ -54,10 +54,10 @@ export const seed = async ({
 	await db.query(insertBrewData);
 
 	const insertNoteTypeData = format(
-		`INSERT INTO note_types (type)
+		`INSERT INTO note_types (type, description)
     VALUES
     %L;`,
-		noteTypeData.map(({ type }) => [type])
+		noteTypeData.map(({ type, description }) => [type, description])
 	);
 	await db.query(insertNoteTypeData);
 
