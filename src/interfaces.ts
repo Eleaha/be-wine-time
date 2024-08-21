@@ -22,6 +22,7 @@ export interface Brew {
 
 export interface NoteTypes {
     type: string;
+    description: string;
 }
 
 export interface Note {
