@@ -9,6 +9,7 @@ import { usersRouter } from "./src/routes/users-router";
 import { recipesRouter } from "./src/routes/recipes-router";
 import { noteTypesRouter } from "./src/routes/note-types-router";
 import { notesRouter } from "./src/routes/notes-router";
+import { wineRackRouter } from "./src/routes/wine-rack-router";
 
 dotenv.config();
 
@@ -23,7 +24,8 @@ app.use("/api/brews", brewsRouter);
 app.use("/api/users", usersRouter);
 app.use("/api/recipes", recipesRouter)
 app.use("/api/note-types", noteTypesRouter);
-app.use("/api/notes", notesRouter)
+app.use("/api/notes", notesRouter);
+app.use("/api/wine-rack", wineRackRouter);
 
 app.all("*", (req: Request, res: Response, next: NextFunction) => {
 	res.status(404).send({ msg: "Not found" });

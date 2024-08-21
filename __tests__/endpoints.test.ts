@@ -3,7 +3,7 @@ import { app } from "../app";
 import { seed } from "../src/db/seed";
 import { data } from "../src/data/test-data/data-index";
 import { db } from "../src/db/db-connection";
-import { Brew, Note, Recipe, User } from "../src/interfaces";
+import { Brew, Note, Recipe, User, Wine } from "../src/interfaces";
 import endpoints from "../endpoints.json";
 
 afterAll(() => db.end());
@@ -780,6 +780,41 @@ describe("/api/notes/brew/:brew_id", () => {
 				.send(payload)
 				.expect(400);
 			expect(body["msg"]).toBe("Bad request");
+		});
+	});
+});
+
+describe("/api/wine-rack", () => {
+	describe("GET /api/wine-rack/user/:user_id", () => {
+		test("GET 200 /api/wine-rack/user/:user_id - returns an array of batches of wine", async () => {
+			const { body } = await request(app).get("/api/wine-rack/user/1").expect(200);
+			const { wineRack } = body;
+			expect(wineRack).toHaveLength(2);
+			wineRack.forEach((wine: Wine) => {
+				expect(wine).toMatchObject({
+					id: expect.any(Number),
+					batch_name: expect.any(String),
+					brew_id: expect.any(Number),
+					date_bottled: expect.any(String),
+					num_of_bottles: expect.any(String),
+				});
+			});
+		});
+		test("GET 404 /api/wine-rack/user/:user_id - non existant user id", async () => {
+			const { body } = await request(app)
+				.get("/api/wine-rack/uer/3000")
+				.expect(404);
+			expect(body["msg"]).toBe("Not found");
+		});
+		test("GET 400 /api/wine-rack/user/:user_id - invalid user id", async () => {
+			const { body } = await request(app)
+				.get("/api/wine-rack/user/garbage")
+				.expect(400);
+			expect(body["msg"]).toBe("Bad request");
+		});
+		test("GET 404 /api/wine-rack/user/:user_id - Custom error for when a user exists but has no associated wines", async () => {
+			const { body } = await request(app).get("/api/wine-rack/user/3").expect(404);
+			expect(body["msg"]).toBe("No wines in the rack yet!");
 		});
 	});
 });
