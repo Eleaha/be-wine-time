@@ -1,0 +1,20 @@
+[
+	{
+		"batch_name": "Maple Mead",
+		"brew_id": 1,
+		"date_bottled": "2024-09-05T21:03:28.822Z",
+		"num_of_bottles": 6
+	},
+	{
+		"batch_name": "Maple Mead II",
+		"brew_id": 1,
+		"date_bottled": "2024-10-05T21:03:28.822Z",
+		"num_of_bottles": 12
+	},
+	{
+		"batch_name": "V Cherry",
+		"brew_id": 3,
+		"date_bottled": "2024-01-15T21:03:28.822Z",
+		"num_of_bottles": 6
+	}
+]

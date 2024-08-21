@@ -4,6 +4,7 @@ export interface Data {
 	noteData: Note[];
 	recipeData: Recipe[];
 	userData: User[];
+    wineRackData: Wine[];
 }
 
 export interface Brew {
@@ -52,4 +53,12 @@ export interface User {
 	username: string;
 	password: string;
 	email: string;
+}
+
+export interface Wine {
+    id?: number;
+    batch_name: string;
+    brew_id: number;
+    date_bottled: string;
+    num_of_bottles: number
 }
