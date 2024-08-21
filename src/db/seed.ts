@@ -9,6 +9,7 @@ export const seed = async ({
 	noteData,
 	recipeData,
 	userData,
+	wineRackData,
 }: Data) => {
 	await dropTables();
 	await createTables();
@@ -77,20 +78,33 @@ export const seed = async ({
 	await db.query(insertNoteData);
 
 	const insertRecipeData = format(
-        `INSERT INTO recipes (maker_id, recipe_name, date_added, link, body, image, hidden)
+		`INSERT INTO recipes (maker_id, recipe_name, date_added, link, body, image, hidden)
     VALUES
     %L;`,
-        recipeData.map(
-            ({
-                maker_id,
-                recipe_name,
-                date_added,
-                link,
-                body,
-                image,
-                hidden,
-            }) => [maker_id, recipe_name, date_added, link, body, image, hidden]
-        )
-    );
+		recipeData.map(
+			({ maker_id, recipe_name, date_added, link, body, image, hidden }) => [
+				maker_id,
+				recipe_name,
+				date_added,
+				link,
+				body,
+				image,
+				hidden,
+			]
+		)
+	);
 	await db.query(insertRecipeData);
+
+	const insertWineRackData = format(
+		`INSERT INTO wine_rack (batch_name, brew_id, date_bottled, num_of_bottles)
+	VALUES
+	%L;`,
+		wineRackData.map(({ batch_name, brew_id, date_bottled, num_of_bottles }) => [
+			batch_name,
+			brew_id,
+			date_bottled,
+			num_of_bottles,
+		])
+	);
+	await db.query(insertWineRackData);
 };

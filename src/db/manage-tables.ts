@@ -1,6 +1,7 @@
 import { db } from "./db-connection";
 
 export const dropTables = async () => {
+	await db.query(`DROP TABLE IF EXISTS wine_rack`);
 	await db.query(`DROP TABLE IF EXISTS recipes`);
 	await db.query(`DROP TABLE IF EXISTS notes`);
 	await db.query(`DROP TABLE IF EXISTS note_types`);
@@ -50,5 +51,12 @@ export const createTables = async () => {
         body TEXT,
         image VARCHAR,
         hidden BOOL DEFAULT true
+    );`);
+	await db.query(`CREATE TABLE wine_rack (
+        id SERIAL PRIMARY KEY,
+        batch_name VARCHAR,
+        brew_id INT REFERENCES users(id),
+        date_bottled VARCHAR DEFAULT NOW(),
+         num_of_bottles DECIMAL(3,1)
     );`);
 };
