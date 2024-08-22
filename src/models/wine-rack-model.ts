@@ -2,6 +2,13 @@ import { User } from "../interfaces";
 import { db } from "../db/db-connection";
 import { fetchUserById } from "./users-model";
 
+export const fetchWineById = async (wineId: number) => {
+    const { rows } = await db.query(
+        `SELECT * FROM wine_rack WHERE id = $1;`, [wineId]
+    )
+    return rows.length ? rows[0] : Promise.reject({ status: 404, msg: "Not found"})
+}
+
 export const fetchWineRackByUserId = async (userId: number) => {
 	const { rows } = await db.query(
 		`SELECT 

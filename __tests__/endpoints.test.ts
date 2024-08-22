@@ -383,8 +383,6 @@ describe("/api/recipes/:recipe_id", () => {
 				hidden: true,
 			});
 		});
-		//400 invalid id
-		//404 non existant id
 		test("PATCH 400 /api/recipes/:recipe_id - bad request body format", async () => {
 			const payload = {
 				garbage: true,
@@ -784,7 +782,32 @@ describe("/api/notes/brew/:brew_id", () => {
 	});
 });
 
-describe("/api/wine-rack", () => {
+describe("/api/wine-rack/:wine_id", () => {
+	describe("GET /api/wine-rack/:wine_id", () => {
+		test("GET 200 /api/wine-rack/:wine_id - responds with the with specified", async () => {
+			const { body } = await request(app).get("/api/wine-rack/1").expect(200);
+			expect(body.wine).toMatchObject({
+				id: 1,
+				batch_name: "Maple Mead",
+				brew_id: 1,
+				date_bottled: "2024-09-05T21:03:28.822Z",
+				num_of_bottles: "6.0",
+			});
+		});
+		test("GET 404 /api/wine-rack/:wine_id - non-existant wine id", async () => {
+			const { body } = await request(app).get("/api/wine-rack/3000").expect(404);
+			expect(body["msg"]).toBe("Not found");
+		});
+		test("GET 400 /api/wine-rack/:wine_id - invalid id", async () => {
+			const { body } = await request(app)
+				.get("/api/wine-rack/garbage")
+				.expect(400);
+			expect(body["msg"]).toBe("Bad request");
+		});
+	});
+});
+
+describe("/api/wine-rack/:user_id", () => {
 	describe("GET /api/wine-rack/user/:user_id", () => {
 		test("GET 200 /api/wine-rack/user/:user_id - returns an array of batches of wine", async () => {
 			const { body } = await request(app).get("/api/wine-rack/user/1").expect(200);
