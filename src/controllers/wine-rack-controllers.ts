@@ -1,6 +1,20 @@
 import { NextFunction, Request, Response } from "express";
 import { Wine } from "../interfaces";
-import { fetchWineRackByUserId } from "../models/wine-rack-model";
+import { fetchWineById, fetchWineRackByUserId } from "../models/wine-rack-model";
+
+export const getWineById = async (
+	req: Request,
+	res: Response,
+	next: NextFunction
+) => {
+	const { wine_id } = req.params;
+	try {
+		const wine: Wine = await fetchWineById(+wine_id)
+		res.status(200).send({ wine })
+	} catch (err) {
+		return next(err)
+	}
+};
 
 export const getWineRackByUserId = async (
 	req: Request,
