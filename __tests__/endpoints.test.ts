@@ -805,6 +805,70 @@ describe("/api/wine-rack/:wine_id", () => {
 			expect(body["msg"]).toBe("Bad request");
 		});
 	});
+	describe("POST /api/wine-rack/:brew_id", () => {
+		test("POST 201 /api/wine-rack/:brew_id - responds with the newly created wine object", async () => {
+			const payload = {
+				batch_name: "test wine",
+				num_of_bottles: 6,
+			};
+			const { body } = await request(app)
+				.post("/api/wine-rack/3")
+				.send(payload)
+				.expect(201);
+			const { wine } = body;
+			expect(wine).toEqual({
+				id: 4,
+				batch_name: "test wine",
+				num_of_bottles: "6.0",
+				brew_id: 3,
+				date_bottled: expect.any(String),
+			});
+		});
+		test("POST 404 /api/wine-rack/:brew_id - when given a non-existant brew_id", async () => {
+			const payload = {
+				batch_name: "test wine",
+				num_of_bottles: 6,
+			};
+			const { body } = await request(app)
+				.post("/api/wine-rack/3000")
+				.send(payload)
+				.expect(404);
+			expect(body.msg).toBe("Not found");
+		});
+		test("POST 400 /api/wine-rack/:brew_id - when given an invalid brew_id", async () => {
+			const payload = {
+				batch_name: "test wine",
+				num_of_bottles: 6,
+			};
+			const { body } = await request(app)
+				.post("/api/wine-rack/garbage")
+				.send(payload)
+				.expect(400);
+			expect(body.msg).toBe("Bad request");
+		});
+		test("POST 400 /api/wine-rack/:brew_id - when given a bad request body format", async () => {
+			const payload = {
+				garbage: "test wine",
+				num_of_bottles: 6,
+			};
+			const { body } = await request(app)
+				.post("/api/wine-rack/3")
+				.send(payload)
+				.expect(400);
+			expect(body.msg).toBe("Bad request");
+		});
+		test("POST 400 /api/wine-rack/:brew_id - when given a bad request body value", async () => {
+			const payload = {
+				batch_name: "test wine",
+				num_of_bottles: "six",
+			};
+			const { body } = await request(app)
+				.post("/api/wine-rack/3")
+				.send(payload)
+				.expect(400);
+			expect(body.msg).toBe("Bad request");
+		});
+	});
 });
 
 describe("/api/wine-rack/:user_id", () => {
