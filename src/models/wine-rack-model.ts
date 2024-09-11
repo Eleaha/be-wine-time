@@ -1,13 +1,33 @@
-import { User } from "../interfaces";
+import { User, Wine } from "../interfaces";
+import format from "pg-format";
 import { db } from "../db/db-connection";
 import { fetchUserById } from "./users-model";
 
 export const fetchWineById = async (wineId: number) => {
-    const { rows } = await db.query(
-        `SELECT * FROM wine_rack WHERE id = $1;`, [wineId]
-    )
-    return rows.length ? rows[0] : Promise.reject({ status: 404, msg: "Not found"})
-}
+	const { rows } = await db.query(`SELECT * FROM wine_rack WHERE id = $1;`, [
+		wineId,
+	]);
+	return rows.length
+		? rows[0]
+		: Promise.reject({ status: 404, msg: "Not found" });
+};
+
+export const insertWine = async (wine: Wine) => {
+	const cols: string[] = Object.keys(wine);
+	const values: any[] = Object.values(wine);
+
+	const colString = cols.join(", ");
+	const queryString: string = format(
+		`
+        INSERT INTO wine_rack (${colString})
+        VALUES %L
+        RETURNING *
+        `,
+		[values]
+	);
+	const { rows } = await db.query(queryString);
+	return rows[0];
+};
 
 export const fetchWineRackByUserId = async (userId: number) => {
 	const { rows } = await db.query(

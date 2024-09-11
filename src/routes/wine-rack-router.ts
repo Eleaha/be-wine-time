@@ -1,8 +1,14 @@
 import express, { Router } from "express";
-import { getWineById, getWineRackByUserId } from "../controllers/wine-rack-controllers";
+import {
+	getWineById,
+	getWineRackByUserId,
+	postWineByBrewId,
+} from "../controllers/wine-rack-controllers";
 
 export const wineRackRouter: Router = express.Router();
 
-wineRackRouter.get("/:wine_id", getWineById)
+wineRackRouter.get("/:wine_id", getWineById);
+
+wineRackRouter.post("/:brew_id", postWineByBrewId);
 
 wineRackRouter.get("/user/:user_id", getWineRackByUserId);
