@@ -1,4 +1,9 @@
-import express, { NextFunction, Request, Response } from "express";
+import express, {
+    ErrorRequestHandler,
+    NextFunction,
+    Request,
+    Response,
+} from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 
@@ -22,19 +27,33 @@ app.use(express.json());
 app.use("/api", apiRouter);
 app.use("/api/brews", brewsRouter);
 app.use("/api/users", usersRouter);
-app.use("/api/recipes", recipesRouter)
+app.use("/api/recipes", recipesRouter);
 app.use("/api/note-types", noteTypesRouter);
 app.use("/api/notes", notesRouter);
 app.use("/api/wine-rack", wineRackRouter);
 
 app.all("*", (req: Request, res: Response, next: NextFunction) => {
-	res.status(404).send({ msg: "Not found" });
+    res.status(404).send({ msg: "Not found" });
 });
 
-app.use((err: any, req: Request, res: Response, next: NextFunction) => {
-	handleErrors(err, req, res, next);
-});
+app.use(
+    (
+        err: ErrorRequestHandler,
+        req: Request,
+        res: Response,
+        next: NextFunction
+    ) => {
+        handleErrors(err, req, res, next);
+    }
+);
 
-app.use((err: any, req: Request, res: Response, next: NextFunction) => {
-    res.status(500).send({ msg: "Internal server error" });
-});
+app.use(
+    (
+        err: ErrorRequestHandler,
+        req: Request,
+        res: Response,
+        next: NextFunction
+    ) => {
+        res.status(500).send({ msg: "Internal server error" });
+    }
+);

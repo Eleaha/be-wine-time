@@ -4,3 +4,5 @@ dist
 psql-commands.md
 end.d.ts
 .vscode
+.github
+.devcontainer

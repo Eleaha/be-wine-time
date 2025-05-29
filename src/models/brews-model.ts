@@ -1,7 +1,7 @@
 import format from "pg-format";
 import { User, Brew } from "../interfaces";
 import { fetchUserById } from "./users-model";
-import { formatSQLColumnString } from "../utils";
+import { formatSQLUpdateColumns } from "../utils";
 import { db } from "../db/db-connection";
 
 export const fetchBrews = async () => {
@@ -10,12 +10,9 @@ export const fetchBrews = async () => {
 };
 
 export const fetchBrewById = async (brewId: number) => {
-    const { rows } = await db.query(
-        `
-        SELECT * FROM brews WHERE id=$1
-        `,
-        [brewId]
-    );
+    const { rows } = await db.query(`SELECT * FROM brews WHERE id = $1`, [
+        brewId,
+    ]);
     if (!rows.length) {
         return Promise.reject({ status: 404, msg: "Not found" });
     }
@@ -24,10 +21,8 @@ export const fetchBrewById = async (brewId: number) => {
 
 export const fetchBrewsByUserId = async (userId: number) => {
     const { rows } = await db.query(
-        `
-        SELECT * FROM brews
-		WHERE maker_id = $1;
-        `,
+        `SELECT * FROM brews
+		WHERE maker_id = $1;`,
         [userId]
     );
     if (!rows.length) {
@@ -40,16 +35,13 @@ export const fetchBrewsByUserId = async (userId: number) => {
 };
 
 export const insertBrew = async (payload: Brew) => {
-    const cols: string[] = Object.keys(payload);
+    const colString: string = Object.keys(payload).join(", ");
     const values: any[] = Object.values(payload);
 
-    const colString = cols.join(", ");
     const queryString: string = format(
-        `
-		INSERT INTO brews (${colString})
+        `INSERT INTO brews (${colString})
 		VALUES %L
-		RETURNING *
-        `,
+		RETURNING *`,
         [values]
     );
     const { rows } = await db.query(queryString);
@@ -60,7 +52,7 @@ export const updateBrewById = async (
     brewId: number,
     updateObj: { [index: string]: any }
 ) => {
-    const setString: string = formatSQLColumnString(updateObj);
+    const setString: string = formatSQLUpdateColumns(updateObj);
     const queryString = `UPDATE brews SET ${setString} WHERE id = $1 RETURNING *;`;
     const { rows } = await db.query(queryString, [brewId]);
     return !rows.length
@@ -70,11 +62,9 @@ export const updateBrewById = async (
 
 export const removeBrewById = async (brewId: number) => {
     const { rows } = await db.query(
-        `
-        DELETE FROM brews
+        `DELETE FROM brews
 		WHERE id = $1
-		RETURNING *;
-        `,
+		RETURNING *;`,
         [brewId]
     );
     if (!rows.length) {

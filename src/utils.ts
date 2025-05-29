@@ -1,18 +1,19 @@
-//takes an object to format and returns a query string representing the columns to add to
-export const formatSQLColumnString = (objectToFormat: {
+import format from "pg-format";
+
+export const formatSQLUpdateColumns = (objectToFormat: {
     [index: string]: any;
 }) => {
-    if (!objectToFormat) {
-    }
-    let queryArray: any[] = [];
-
+    let queryArr: any[] = [];
     for (const key in objectToFormat) {
-        if (typeof objectToFormat[key] === "string") {
-            queryArray.push(`${key} = '${objectToFormat[key]}'`);
-        } else {
-            queryArray.push(`${key} = ${objectToFormat[key]}`);
-        }
+        queryArr.push(format(`%I = %L`, key, objectToFormat[key]));
     }
-    const queryString = queryArray.join(", ");
-    return queryString;
+    return queryArr.join(", ");
+};
+
+export const formatSQLInsertColumns = (objectToFormat: {
+    [index: string]: any;
+}) => {
+    return Object.keys(objectToFormat)
+        .map((key) => format("%I", key))
+        .join(", ");
 };
